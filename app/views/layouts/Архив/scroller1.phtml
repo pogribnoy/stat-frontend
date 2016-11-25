@@ -1,0 +1,173 @@
+<div name="scroller_placeholder"></div>
+<!--<div hidden="" name="scroller_template"></div>-->
+<script id="scroller_template" type="text/x-jsrender">
+<span></span>
+<br>layouts\scroller
+<div class="panel panel-default" name="scroller_{{:descriptor.entity}}">
+	<div class="panel-heading">
+		{{:descriptor.header}}			
+		<div class="pull-right">
+			{{for descriptor.common_operations tmpl="common_operation" /}}
+		</div><!-- /.pull-right -->
+	</div><!-- /.panel-heading -->
+	<div class="panel-body">
+		<input hidden="" id="page" value="{{:descriptor.filter_values.page}}">
+		<input hidden="" id="sort" value="{{:descriptor.filter_values.sort}}">
+		<input hidden="" id="order" value="{{:descriptor.filter_values.order}}">
+		<input hidden="" id="page_size" value="{{:descriptor.filter_values.page_size}}">
+		
+		<table class="table table-striped table-bordered table-hover table-responsive">
+			<thead>
+				<tr>
+					{{for descriptor.columns tmpl="column_name" /}}
+				</tr>
+			</thead>
+			<tbody>
+				<!-- строка фильтров -->
+				<tr>
+					{{for descriptor.columns tmpl="column_filter" /}}
+				</tr>
+				{{for items tmpl="organizationlist_row" }}
+				{{else}}	
+					<!-- если данных нет -->
+					<tr ><td colspan="{{:descriptor.columns.length}}"><p class="text-center"><?php echo $t->_('text_no_data'); ?></p></td></tr>
+				{{/for}}
+			</tbody>
+		</table>
+		<span class="pull-right"><?php echo $t->_('text_page_sizes'); ?>&nbsp;{{include tmpl="page_size"/}}</span>
+	</div><!-- /.panel-body -->
+	<div class="panel-footer">
+		{{if descriptor.pager tmpl="pager"}}{{/if}}
+	</div>
+</div><!-- /.panel -->
+
+</script>
+
+<script src="../../templates/scroller.js"></script>
+<script src="../../templates/organizationlist.js"></script>
+
+<script type="text/javascript"><!--
+
+$(document).ready(function() {
+	apply_filter();
+});
+
+
+var row = [{
+	"id": "2", 
+	"name": "asdasd", 
+	"region_id": "20", 
+	"region_name": "20", 
+	"contacts": "qweqweqw", 
+	"email": "asd@asd.ru", 
+	"img": "image", 
+	"item_operations": [
+		{"id": "edit", "name":"Правка"},
+		{"id": "delete", "name":"Удвлить"}
+	]}
+];
+
+// Очищает поля фильтра, запрашивает и выводит отфильтрованные данные
+function clear_filter() {
+	var container = $("div [name='scroller_placeholder']");
+	<?php for($i=0; $i<count($descriptor['columns']); $i++) { 
+		$column = $descriptor['columns'][$i];
+		if(isset($column['filter'])) {
+			if($column['filter'] == 'text' || $column['filter'] == 'number' || $column['filter'] == 'email') { ?>
+	container.find("input[name='filter_<?php echo $column['id']; ?>']").val("");
+			<?php } else if($column['filter'] == 'list_id') { ?>
+	container.find("select[name='filter_<?php echo $column['id']; ?>']").val("");
+			<?php } else if($column['filter'] == 'bool') { ?>
+	// TODO:
+			<?php } ?>
+		<?php } ?>
+	<?php } ?>
+}
+
+// клик по номеру страницы
+function changePage(p){
+	var container = $("div [name='scroller_placeholder']");
+	console.log('p='+p);
+	container.find('#page').val(p);
+	console.log('page='+container.find('#page').val());
+	apply_filter();
+}
+
+// клик по сортировке колонки
+function changeSort(id){
+	var container = $("div [name='scroller_placeholder']");
+	var s = container.find("#order");
+	s.val() == "DESC" ? s.val("ASC") : s.val("DESC");
+	
+	container.find("#sort").val(id);
+	apply_filter();
+}
+
+// выбор количества стро на странице
+function changePageSize(){
+	var container = $("div [name='scroller_placeholder']");
+	container.find("#page_size").val(container.find("select[name='page_sizes']").val());
+	apply_filter();
+}
+
+// Запрашивает и выводит отфильтрованные данные
+function apply_filter() {
+	url = '/organizationlist/filterr?';
+
+	var container = $("div [name='scroller_placeholder']");
+	
+	var page = container.find('#page').val();
+	url += 'page=' +  encodeURIComponent(page ? page : 1);
+	
+	var sort = container.find('#sort').val();
+	if (sort) url += '&sort=' + encodeURIComponent(sort);
+	
+	var order = container.find('#order').val();
+	if (order) url += '&order=' + encodeURIComponent(order);
+	
+	var page_size = container.find("select[name='page_sizes']").val();
+	if (page_size) url += '&page_size=' + encodeURIComponent(page_size);
+	
+	<?php for($i=0; $i<count($descriptor['columns']); $i++) { 
+		$column = $descriptor['columns'][$i];
+		if(isset($column['filter'])) {
+			if($column['filter'] == 'text' || $column['filter'] == 'number' || $column['filter'] == 'email') { ?>
+	var filter_<?php echo $column['id']; ?> = container.find("input[name='filter_<?php echo $column['id']; ?>']").val();
+	if (filter_<?php echo $column['id']; ?>) url += '&filter_<?php echo $column['id']; ?>=' + encodeURIComponent(filter_<?php echo $column['id']; ?>);
+			<?php } else if($column['filter'] == 'list_id') { ?>
+	var filter_<?php echo $column['filter_id']; ?> = container.find("select[name='filter_<?php echo $column['id']; ?>']").val();
+	if (filter_<?php echo $column['filter_id']; ?> && filter_<?php echo $column['filter_id']; ?> != "*") url += '&filter_<?php echo $column['filter_id']; ?>=' + encodeURIComponent(filter_<?php echo $column['filter_id']; ?>);
+			<?php } else if($column['filter'] == 'bool') { ?>
+	// TODO:
+			<?php } ?>
+		<?php } ?>
+	<?php } ?>
+	
+	console.log(url);
+	$.ajax({
+		url: url,
+		dataType: 'json',
+		//dataType: 'html',
+		method: 'get',
+		beforeSend: function() {
+				// показываем прогрессбар
+		},
+		complete: function() {
+			// скрываем прогрессбар
+		},			
+		success : function(json) {
+			
+			console.log(json);
+			var tmpl = $.templates("#scroller_template");
+			
+			container.html(tmpl.render({descriptor:json.descriptor, items:json.items}));
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			//alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+}
+
+//--></script>
+

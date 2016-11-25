@@ -1,0 +1,16 @@
+<?php if(isset($news)) { 
+	foreach($news as $id => $entity) { ?>
+		<div class="row-fluid">
+			<div class="media">
+				<div class="pull-left"><?php echo $entity['publication_date']; ?></div>
+				<a class="pull-left" href="#">
+					<img class="media-object" src="" alt="">
+				</a>
+				<div class="media-body">
+					<a href="/news?id=<?php echo $id; ?>"><h4 class="media-heading"><?php echo $entity['name']; ?></h4></a>
+					<?php echo $entity['description']; ?>
+				</div>
+			</div>
+		</div>
+	<?php } ?>
+<?php } ?>

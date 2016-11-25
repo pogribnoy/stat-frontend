@@ -1,0 +1,80 @@
+<div class="row"><div class="col-lg-12"><div>&nbsp;</div></div></div>
+<div class="row"><div class="col-lg-12"><div>&nbsp;</div></div></div>
+<div class="row"><div class="col-lg-12"><div>&nbsp;</div></div></div>
+<div class="row">
+	<form class="form-horizontal">
+		<div class="form-group">
+			<label for="regionSelect" class="col-lg-3 control-label">Выберите регион/область</label>
+			<div class="col-lg-8">
+				<select id="regionSelect" class="form-control extended" onchange="onRegionChange(this);">
+					<option value="*" selected="selected"></option>
+					<?php if(isset($regions)) { 
+						foreach($regions as $id => $name) { ?>
+							<option value="<?php echo $id; ?>"><?php echo $name; ?></option>
+						<?php } ?>
+					<?php } ?>
+				<select>
+				<!--<input type="region" class="form-control" id="inputRegion" placeholder="Регион">-->
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="organizationSelect" class="col-lg-3 control-label">Выберите муниципалитет</label>
+			<div class="col-lg-8">
+				<select id="organizationSelect" class="form-control extended" onchange="onOrganizationChange(this);">
+					<option value="*" selected="selected"></option>
+					<?php if(isset($organizations)) { 
+						foreach($organizations as $id => $org) { ?>
+							<option value="<?php echo $id; ?>"><?php echo $org['name'] . ' (' . $regions[$org['regionID']] . ')'; ?></option>
+						<?php } ?>
+					<?php } ?>
+				<select>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-lg-offset-3 col-lg-10">
+				<button id="showExpenses" type="button" class="btn btn-default" disabled onclick="onShowExpensesClick();">Перейти</button>
+			</div>
+		</div>
+	</form>
+</div>
+
+<script type="text/javascript"><!--
+
+var regions = <?php echo json_encode($regions); ?>;
+var organizations = <?php echo json_encode($organizations); ?>;
+
+function onRegionChange(ctrl) {
+	var regID = ctrl.value;
+	
+	var selectOrgs = $("#organizationSelect").empty();
+	var optionsHTML = '<option value="*" selected="selected"></option>';
+	if(regID == '*') {
+		for (var id in organizations) {
+			var org = organizations[id];
+			optionsHTML += '<option value="' + id + '">' + org.name + ' (' + regions[org['regionID']] + ')</option>';
+		}
+	}
+	else {
+		for (var id in organizations) {
+			var org = organizations[id];
+			if(org.regionID == regID) optionsHTML += '<option value="' + id + '">' + org.name + ' (' + regions[org['regionID']] + ')</option>';
+		}
+	}
+	selectOrgs.append(optionsHTML);
+	//selectOrgs.select2();
+	//selectOrgs.on("select2:select", onOrganizationSelect);
+}
+
+function onOrganizationChange(ctrl) {
+	var orgID = ctrl.value;
+	if(orgID == '*') $('#showExpenses').prop('disabled', true);
+	else $('#showExpenses').prop('disabled', false);
+}
+
+function onShowExpensesClick() {
+	var orgID = $("#organizationSelect").val();
+	if(orgID == '*') { $('#showExpenses').prop('disabled', true); return; }
+	
+	document.location = '/organization?id='+orgID;
+}
+//--></script>

@@ -1,0 +1,237 @@
+<br>layouts\scroller
+<div class="panel panel-default" name="scroller_<?php echo $descriptor['entity']; ?>">
+	<div class="panel-heading">
+		<?php echo $descriptor['header']; ?>
+		<div class="pull-right">
+			<?php for($bc=0; $bc<count($descriptor['common_operations']); $bc++) { 
+				$operation = $descriptor['common_operations'][$bc];
+			?>
+				<?php if($operation['id'] == 'add') { ?>
+					<button type="button" class="btn btn-primary btn-xs" aria-label="<?php echo $operation['name']; ?>" name="<?php echo $operation['id']; ?>" onclick="add_row();">
+						<?php echo $operation['name']; ?>
+					</button>
+				<?php } ?>
+			<?php } ?>
+		</div><!-- /.pull-right -->
+	</div><!-- /.panel-heading -->
+	<div class="panel-body">
+		<input hidden="" id="page" value="<?php echo $descriptor['filter_values']['page']; ?>">
+		<input hidden="" id="sort" value="<?php echo $descriptor['filter_values']['sort']; ?>">
+		<input hidden="" id="order" value="<?php echo $descriptor['filter_values']['order']; ?>">
+		<table class="table table-striped table-bordered table-hover table-responsive">
+			<thead>
+				<tr>
+					<?php for($i=0; $i<count($descriptor['columns']); $i++) { 
+						$column = $descriptor['columns'][$i];
+					?>
+						<th <?php if(isset($column['width'])) echo 'width=' . $column['width']; ?>><?php echo $column['name']; ?></th>
+					<?php } ?>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- строка фильтров -->
+				<tr>
+					<?php for($i=0; $i<count($descriptor['columns']); $i++) { 
+						$column = $descriptor['columns'][$i];
+					?>
+						<td>
+							<?php if(isset($column['filter'])) {
+								if($column['filter'] == 'text') { ?>
+									<input type="text" name="filter_<?php echo $column['id']; ?>" value="<?php echo $column['filter_value']; ?>"/>
+								<?php } else if($column['filter'] == 'number') { ?>
+									<input type="number" name="filter_<?php echo $column['id']; ?>" value="<?php echo $column['filter_value']; ?>"/>
+								<?php } else if($column['filter'] == 'email') { ?>
+									<input type="email" name="filter_<?php echo $column['id']; ?>" value="<?php echo $column['filter_value']; ?>"/>
+								<?php } else if($column['filter'] == 'list_id') { ?>
+									<select name="filter_<?php echo $column['id']; ?>">
+										<option value="*" <?php if($column['filter_value'] == '') echo 'selected="selected"'; ?>/></option>
+										<?php for($j=0; $j<count($column['filter_values']); $j++) { ?>
+											<option value="<?php echo $column['filter_values'][$j]['id']; ?>" <?php if($column['filter_value'] == $column['filter_values'][$j]['id']) echo 'selected="selected"'; ?>/><?php echo $column['filter_values'][$j]['name']; ?></option>
+										<?php } ?>
+									</select>
+								<?php } else if($column['filter'] == 'bool') { ?>
+									<select name="filter_<?php echo $column['id']; ?>">
+										<option value="*"/></option>
+										<option value="1"/>Да</option>
+										<option value="0"/>Нет</option>
+									</select>
+								<?php } ?>
+							<?php } else if($column['id'] == 'actions') { ?>
+								<?php for($bc=0; $bc<count($descriptor['filter_operations']); $bc++) { 
+									$operation = $descriptor['filter_operations'][$bc];
+								?>
+									<?php if($operation['id'] == 'apply') { ?>
+										<button type="button" class="btn btn-primary btn-xs" aria-label="<?php echo $operation['name']; ?>" name="<?php echo $operation['id']; ?>" onclick="apply_filter();">
+											<span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
+										</button>
+									<?php } else if($operation['id'] == 'clear') { ?>
+										<button type="button" class="btn btn-primary btn-xs" aria-label="<?php echo $operation['name']; ?>" name="<?php echo $operation['id']; ?>" onclick="clear_filter(); apply_filter();">
+											<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+										</button>
+									<?php } ?>
+								<?php } ?>
+							<?php } else { ?>
+							<?php } ?>
+						</td>
+					<?php } ?>
+				</tr>
+				<?php if($items) { ?>
+					<!-- строки с данными -->
+					<?php for($i=0; $i<count($items); $i++) { ?>
+						<tr class="odd gradeX">
+							<?php for($j=0; $j<count($descriptor['columns']); $j++) { 
+								$column = $descriptor['columns'][$j];
+							?>
+								<?php if($column['id'] == 'actions') { ?>
+									<td>
+										<?php for($bc=0; $bc<count($descriptor['item_operations']); $bc++) { 
+											$operation = $descriptor['item_operations'][$bc];
+										?>
+											<?php if($operation['id'] == 'delete') { ?>
+												<button type="button" class="btn btn-primary btn-xs" aria-label="<?php echo $operation['name']; ?>" name="<?php echo $operation['id']; ?>" onclick="row_<?php echo $operation['id']; ?>(<?php echo $items[$i]['id']; ?>)">
+													<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+												</button>
+											<?php } else if($operation['id'] == 'edit') { ?>
+												<button type="button" class="btn btn-primary btn-xs" aria-label="<?php echo $operation['name']; ?>" name="<?php echo $operation['id']; ?>" onclick="row_<?php echo $operation['id']; ?>(<?php echo $items[$i]['id']; ?>)">
+													<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+												</button>
+											<?php } ?>
+										<?php } ?>
+									</td>
+								<?php } else { ?>
+									<td><?php echo $items[$i][$column['id']]; ?></td>
+								<?php } ?>
+							<?php } ?>
+						</tr>
+					<?php } ?>
+				<!-- если данных нет -->
+				<?php } else { ?>
+					<tr ><td colspan="<?php echo count($descriptor['columns']); ?>"><p class="text-center"><?php echo $t->_('text_no_data'); ?></p></td></tr>
+				<?php } ?>
+			</tbody>
+		</table>
+	</div><!-- /.panel-body -->
+	<div class="panel-footer"><?php echo $descriptor['paginationHtml']; ?><?php $this->partial("layouts/paginator"); ?></div>
+</div><!-- /.panel -->
+
+
+
+<script type="text/javascript"><!--
+
+$(document).ready(function() {
+	$.when(lazyGetTemplate('organizationlist', 'organizationlist_row'),lazyGetTemplate('scroller', 'item_operations')).done(function() {
+		// Render or link once all templates for template composition are loaded
+		var row = [{
+			"id": "2", 
+			"name": "asdasd", 
+			"region_id": "20", 
+			"region_name": "20", 
+			"contacts": "qweqweqw", 
+			"email": "asd@asd.ru", 
+			"img": "image", 
+			"item_operations": [
+				{"id": "edit", "name":"Правка"},
+				{"id": "delete", "name":"Удвлить"}
+			]}
+		];
+		var html = $.templates.organizationlist_row.render(row);
+		$('tbody').append(html);
+		$('.btn').button();
+		console.log(html);
+	});
+	
+});
+
+function lazyGetTemplate(file, template) {
+	var deferred = $.Deferred();
+  if ($.templates[template]) {
+    deferred.resolve();
+  } else {
+    $.getScript( "../../templates/"+file+".js", function( data, textStatus, jqxhr ) {
+			console.log( data ); // Data returned
+			console.log( textStatus ); // Success
+			console.log( jqxhr.status ); // 200
+			console.log( "Load was performed." );
+		}).fail(function( jqxhr, settings, exception ) {
+			console.log( exception + "\r\n" + jqxhr.statusText + "\r\n" + jqxhr.responseText );
+		}).then(function() {
+			if ($.templates[template]) {
+				deferred.resolve();
+				console.log("Templates loaded");
+			} else {
+				alert("Script: \""+file+".js\" failed to load");
+				deferred.reject();
+			}
+		});
+  }
+  return deferred.promise();
+}
+
+
+// Запрашивает и выводит отфильтрованные данные
+function apply_filter() {
+	url = '/<?php echo $controllerName; ?>/filter?';
+
+	url += 'page=' + $('#page').val();
+
+	if ($('#sort').val()) {
+		url += '&sort=' + $('#sort').val();
+	}
+	
+	if ($('#order').val()) {
+		url += '&order=' + $('#order').val();
+	}
+	
+	var filter_id = $('input[name=\'filter_id\']').val();
+	if (filter_id) {
+		url += '&filter_id=' + encodeURIComponent(filter_id);
+	}
+	
+	var filter_name = $('input[name=\'filter_name\']').val();
+	if (filter_name) {
+		url += '&filter_name=' + encodeURIComponent(filter_name);
+	}
+	
+	var filter_region_id = $('select[name=\'filter_region_name\']').val();
+	if (filter_region_id) {
+		url += '&filter_region_id=' + encodeURIComponent(filter_region_id);
+	}
+	console.log("filter_region_id="+filter_region_id);
+	
+	var filter_contacts = $('input[name=\'filter_contacts\']').val();
+	if (filter_contacts) {
+		url += '&filter_contacts=' + encodeURIComponent(filter_contacts);
+	}
+	
+	var filter_email = $('input[name=\'filter_email\']').val();
+	if (filter_email) {
+		url += '&filter_email=' + encodeURIComponent(filter_email);
+	}
+	
+	console.log(url);
+	
+	$.ajax({
+		url: url,
+		//dataType: 'json',
+		dataType: 'html',
+		method: 'get',
+		beforeSend: function() {
+				// показываем прогрессбар
+		},
+		complete: function() {
+			// скрываем прогрессбар
+		},			
+		success : function(html) {
+			//alert("asd");
+			//console.log(html);
+			//$('div [name=\'scroller_<?php echo $descriptor['entity']; ?>\']').replaceWith(html);
+			$('#content').replaceWith(html);
+			$("select[name='filter_region_name'] [value='20']").attr("selected", "selected");
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+}
+
+//--></script>

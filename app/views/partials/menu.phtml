@@ -1,0 +1,41 @@
+<!--<br>layouts\menu-->
+
+<nav class="navbar navbar-default" role="navigation">
+	<div class="container-fluid">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+		  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+			<span class="sr-only">Навигация</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		  </button>
+		  <a class="navbar-brand" href="/"><?php echo $controller->t->_("text_site_short_name"); ?></a>
+		</div>
+		
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse navbar-left" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li class="<?php if($controller->controllerName == 'index' && $controller->actionName == 'index') { ?>active<?php } ?>"><a href="/index">Главная</a></li>
+				<li class="<?php if($controller->controllerName == 'newslist' && $controller->actionName == 'index') { ?>active<?php } ?>"><a href="/newslist">Новости</a></li>
+				<li class="<?php if(($controller->controllerName == 'expensetypelist' || $controller->controllerName == 'expensetype') && $controller->actionName == 'index') { ?>active<?php } ?>"><a href="/expensetypelist">Общая статистика<!--statistics--></a></li>
+				<li class="<?php if($controller->controllerName == 'about' && $controller->actionName == 'index') { ?>active<?php } ?>"><a href="/about">О проекте</a></li>			
+				<!--<li class="" data-toggle="modal" data-target="#supportRequestModal"><a href="#" >Обращение в службу поддержки</a></li>-->
+			</ul>
+		</div><!-- /.navbar-collapse -->
+		<div class="controls controls-row navbar-right">
+			<ul class="nav navbar-nav">
+				<div id="authButtons">
+					<span name="userName"><?php if(isset($controller->userData['name'])) echo $controller->userData['name']; ?></span>
+					<button name="logout" type="button" class="btn btn-default navbar-btn" onclick="frontendLogout();" style="<?php if(!isset($controller->userData['name'])) { ?>display:none;<?php } ?>">Выйти</button>
+					<button name="login" type="button" class="btn btn-primary navbar-btn" data-toggle="modal" data-target="#logonModal" style="<?php if(isset($controller->userData['name'])) { ?>display:none;<?php } ?>">Вход</button>
+					<button name="register" type="button" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#registerModal" style="<?php if(isset($controller->userData['name'])) { ?>display:none;<?php } ?>">Регистрация</button>
+				</div>
+			</ul>
+		</div>
+	</div><!-- /.container-fluid -->
+</nav>
+
+<script type="text/javascript"><!--
+
+//--></script>

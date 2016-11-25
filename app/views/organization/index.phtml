@@ -1,0 +1,29 @@
+<div class="row-fluid">
+	<div class="media">
+		<img class="media-object pull-left" src="<?php echo $org['img']['href']; ?>" alt="<?php echo $org['name']['value']; ?>" style="width:200px; heght:200px;">
+		<div class="media-body">
+			<div class="container-fluid">
+				<!--контакты-->
+				<div class="row">
+					<div class="col-lg-2"><p><?php echo $org['contacts']['name']; ?></p></div>
+					<div class="col-lg-10"><p><?php echo $org['contacts']['value']; ?></p></div>
+				</div>
+				<!--email-->
+				<div class="row">
+					<div class="col-lg-2"><p><?php echo $org['email']['name']; ?></p></div>
+					<div class="col-lg-10"><p><?php echo $org['email']['value']; ?></p></div>
+				</div>
+				<!--регион-->
+				<div class="row">
+					<div class="col-lg-2"><p><?php echo $org['region']['name']; ?></p></div>
+					<div class="col-lg-10"><p><?php echo $org['region']['value']; ?></p></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row-fluid"><p></p></div>
+<div class="row-fluid">
+	<button id="showExpenses" type="button" class="btn btn-primary" onclick="document.location = '/expenselist?filter_organization_name=<?php echo $org['name']['value']; ?>'">Перейти к расходам</button>
+	<button id="organizationRequest" type="button" class="btn btn-default" onclick="organizationRequest(<?php echo $org["id"]["value"]; ?>);">Задать вопрос</button>
+</div>

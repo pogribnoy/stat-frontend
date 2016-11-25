@@ -1,0 +1,26 @@
+<br>layouts\paginator
+<?php if(isset($pages)) { ?>
+	<nav>
+		<ul class="pagination">
+			<li>
+				<a href="#" aria-label="Previous">
+					<span aria-hidden="true">&laquo;</span>
+				</a>
+			</li>
+			<?php for($i=0; $i<count($pages); $i++) { 
+				$page = $pages[$i];
+			?>
+				<li><a href="<?php echo $page['url']; ?>"><?php echo $page['num']; ?></a></li>
+			<?php } ?>
+			<li><a href="#">2</a></li>
+			<li><a href="#">3</a></li>
+			<li><a href="#">4</a></li>
+			<li><a href="#">5</a></li>
+			<li>
+				<a href="#" aria-label="Next">
+					<span aria-hidden="true">&raquo;</span>
+				</a>
+			</li>
+		</ul>
+	</nav>
+<?php } ?>
