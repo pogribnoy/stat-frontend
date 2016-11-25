@@ -94,7 +94,6 @@ $messages = array(
 "button_search"         => "Поиск",
 "button_view"           => "Просмотр",
 "button_upload"         => "Загрузить",
-"button_show"           => "Просмотр",
 
 // Information
 "text_no_data"        => "Нет данных для отображения",

@@ -45,15 +45,12 @@
 		<!-- для работы с модальными окнами  -->
 		<script type="text/javascript" src="<?php echo $controller->config->application->commonHost; ?>/public/modal.js"></script>
 		<script type="text/javascript" src="http://<?php echo $controller->config->application->host; ?>/public/common-client.js"></script>
+		<script src="<?php echo $controller->config->application->commonHost; ?>/public/templates/common_templates.js"></script>
+		<script src="<?php echo $controller->config->application->commonHost; ?>/public/templates/scroller.js"></script>
+		<script src="<?php echo $controller->config->application->commonHost; ?>/public/templates/entity.js"></script>
 		<?php 
 			$this->partial(APP_PATH . $this->config->application->commonTemplatesDir . "form_template");
 			$this->partial(APP_PATH . $this->config->application->commonTemplatesDir . "scroller_template"); 
 		?>
-			
-		<script src="<?php echo $controller->config->application->commonHost; ?>/public/templates/common_templates.js"></script>
-		<script src="<?php echo $controller->config->application->commonHost; ?>/public/templates/scroller.js"></script>
-		<script src="<?php echo $controller->config->application->commonHost; ?>/templates/entity.js"></script>
-				
-		
 	</body>
 </html>

@@ -1,5 +1,3 @@
-*.log
-.gitignore
 app/config/config.php
 app/logs/*.log
 cache/volt/*.php
@@ -14,3 +12,6 @@ Thumbs.db
 *.sublime-project
 *.sublime-workspace
 .idea/
+.gitignore
+*.log
+*.log
