@@ -10,6 +10,5 @@ $messages["related_data_expenses"] = "Расходы";
 // Регион
 $messages["text_organization_region"]	= "Регион";
 
-// названия связанных данных
-
-
+// Chart
+$messages["text_organization_chart_title"]	= "Распределение расходов по типам за {year} год";

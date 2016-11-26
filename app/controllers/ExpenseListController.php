@@ -86,6 +86,27 @@ class ExpenseListController extends ControllerList {
 				'filter_value' => isset($this->filter_values['date']) ? $this->filter_values['date'] : '',
 				"sortable" => "DESC",
 			),
+			'street_type' => array(
+				'id' => 'street_type',
+				'name' => $this->controller->t->_("text_entity_property_street_type"),
+				'filter' => 'text',
+				'filter_value' => isset($this->filter_values['street_type']) ? $this->filter_values['street_type'] : '',
+				"sortable" => "DESC",
+			),
+			'street' => array(
+				'id' => 'street',
+				'name' => $this->controller->t->_("text_entity_property_street"),
+				'filter' => 'text',
+				'filter_value' => isset($this->filter_values['street']) ? $this->filter_values['street'] : '',
+				"sortable" => "DESC",
+			),
+			'house' => array(
+				'id' => 'house',
+				'name' => $this->controller->t->_("text_entity_property_house_building"),
+				'filter' => 'text',
+				'filter_value' => isset($this->filter_values['house']) ? $this->filter_values['house'] : '',
+				"sortable" => "DESC",
+			),
 			'expense_type' => array(
 				'id' => 'expense_type',
 				'name' => $this->controller->t->_("text_expenselist_expensetype"),
@@ -140,7 +161,7 @@ class ExpenseListController extends ControllerList {
 		$userRoleID = $this->controller->userData['role_id'];
 		
 		// строим запрос к БД на выборку данных
-		$phql = "SELECT <TableName>.*, ExpenseType.id AS expense_type_id, ExpenseType.name AS expense_type_name, Organization.id AS organization_id, Organization.name AS organization_name, Region.id AS organization_region_id, Region.name AS organization_region_name FROM <TableName> JOIN ExpenseType on ExpenseType.id=<TableName>.expense_type_id JOIN Organization ON Organization.id = <TableName>.organization_id JOIN Region ON Region.id = Organization.region_id";
+		$phql = "SELECT <TableName>.*, ExpenseType.id AS expense_type_id, ExpenseType.name AS expense_type_name, Organization.id AS organization_id, Organization.name AS organization_name, Region.id AS organization_region_id, Region.name AS organization_region_name, StreetType.id AS street_type_id, StreetType.name AS street_type_name FROM <TableName> JOIN ExpenseType on ExpenseType.id=<TableName>.expense_type_id JOIN Organization ON Organization.id = <TableName>.organization_id JOIN Region ON Region.id = Organization.region_id LEFT JOIN StreetType ON StreetType.id = <TableName>.street_type_id";
 		
 		$phql .= " WHERE 1=1";
 		
@@ -189,6 +210,18 @@ class ExpenseListController extends ControllerList {
 				"date" => array(
 					'id' => 'date',
 					'value' => $row->expense->date ? $row->expense->date : '',
+				),
+				"street_type" => array(
+					'value_id' => $row->street_type_id ? $row->street_type_id : '',
+					'value' => $row->street_type_name ? $row->street_type_name : '',
+				),
+				"street" => array(
+					'id' => 'street',
+					'value' =>  $row->expense->street,
+				),
+				"house" => array(
+					'id' => 'house',
+					'value' =>  $row->expense->house,
 				),
 				"expense_type" => array(
 					'value_id' => $row->expense_type_id ? $row->expense_type_id : '',

@@ -12,14 +12,14 @@ class IndexController extends ControllerBase {
 	public function indexAction() {
 		$this->view->setVar("page_header", $this->t->_("text_site_full_name"));
 		
-		$regions_rows = Region::find();
+		$regions_rows = Region::find(['order' => 'name ASC']);
 		$regions = array();
 		foreach ($regions_rows as $row) {
 			// наполняем массив
 			$regions[$row->id] =  $row->name;
 		}
 		
-		$organizations_rows = Organization::find();
+		$organizations_rows = Organization::find(['order' => 'name ASC']);
 		$organizations = array();
 		foreach ($organizations_rows as $row) {
 			// наполняем массив
