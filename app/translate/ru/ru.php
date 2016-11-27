@@ -42,6 +42,7 @@ $messages = array(
 "text_entity_property_date" => "Дата",
 "text_entity_property_description" => "Описание",
 "text_entity_property_email" => "Email",
+"text_entity_property_executor" => "Подрядчик",
 "text_entity_property_files" => "Файлы",
 "text_entity_property_fio" => "ФИО",
 "text_entity_property_header" => "Заголовок",
