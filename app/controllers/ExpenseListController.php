@@ -2,6 +2,7 @@
 class ExpenseListController extends ControllerList {
 	public $entityName = 'expense';
 	public $controllerName = "expenselist";
+	public $notCollapsible = 1;
 	
 	public function initialize() {
 		parent::initialize();
@@ -26,7 +27,7 @@ class ExpenseListController extends ControllerList {
 					"bind" => [1 => $row->id]
 				]),
 			];
-			$this->logger->log('sum: ' . json_encode($expenseTypes));
+			//$this->logger->log('sum: ' . json_encode($expenseTypes));
 			$expenseTypes[$row->id]['prcnt'] = $expenseTypes[$row->id]['sum']/$totalSum*100;
 		}
 		
@@ -66,14 +67,6 @@ class ExpenseListController extends ControllerList {
 				'style' => 'id',
 				"sortable" => "DESC",
 			),
-			'name' => array(
-				'id' => 'name',
-				'name' => $this->controller->t->_("text_expenselist_expense_name"),
-				'type' => 'text',
-				'filter' => 'text',
-				'filter_value' => isset($this->filter_values['name']) ? $this->filter_values['name'] : '',
-				"sortable" => "DESC",
-			),
 			'organization_name' => array(
 				'id' => 'organization_name',
 				'name' => $this->controller->t->_("text_expenselist_organization_name"),
@@ -81,11 +74,12 @@ class ExpenseListController extends ControllerList {
 				'filter_value' => isset($this->filter_values['organization_name']) ? $this->filter_values['organization_name'] : '',
 				"sortable" => "DESC",
 			),
-			'date' => array(
-				'id' => 'date',
-				'name' => $this->controller->t->_("text_entity_property_date"),
+			'name' => array(
+				'id' => 'name',
+				'name' => $this->controller->t->_("text_expenselist_expense_name"),
+				'type' => 'text',
 				'filter' => 'text',
-				'filter_value' => isset($this->filter_values['date']) ? $this->filter_values['date'] : '',
+				'filter_value' => isset($this->filter_values['name']) ? $this->filter_values['name'] : '',
 				"sortable" => "DESC",
 			),
 			'street_type' => array(
@@ -96,6 +90,7 @@ class ExpenseListController extends ControllerList {
 				'filter_id' => 'street_type_id', // задается, если отличается от id
 				'style' => 'id',
 				"sortable" => "DESC",
+				'nullable' => '-',
 			),
 			'street' => array(
 				'id' => 'street',
@@ -103,12 +98,36 @@ class ExpenseListController extends ControllerList {
 				'filter' => 'text',
 				'filter_value' => isset($this->filter_values['street']) ? $this->filter_values['street'] : '',
 				"sortable" => "DESC",
+				'nullable' => '-',
 			),
 			'house' => array(
 				'id' => 'house',
 				'name' => $this->controller->t->_("text_entity_property_house_building"),
 				'filter' => 'text',
 				'filter_value' => isset($this->filter_values['house']) ? $this->filter_values['house'] : '',
+				"sortable" => "DESC",
+				'nullable' => '-',
+			),
+			'executor' => array(
+				'id' => 'executor',
+				'name' => $this->controller->t->_("text_entity_property_executor"),
+				'filter' => 'text',
+				'filter_value' => isset($this->filter_values['executor']) ? $this->filter_values['executor'] : '',
+				"sortable" => "DESC",
+				'nullable' => '-',
+			),
+			'amount' => array(
+				'id' => 'amount',
+				'name' => $this->controller->t->_("text_entity_property_amount"),
+				'filter' => 'text',
+				'filter_value' => isset($this->filter_values['amount']) ? $this->filter_values['amount'] : '',
+				"sortable" => "DESC",
+			),
+			'date' => array(
+				'id' => 'date',
+				'name' => $this->controller->t->_("text_expenselist_date"),
+				'filter' => 'text',
+				'filter_value' => isset($this->filter_values['date']) ? $this->filter_values['date'] : '',
 				"sortable" => "DESC",
 			),
 			'expense_status' => array(
@@ -118,20 +137,6 @@ class ExpenseListController extends ControllerList {
 				'filter_value' => isset($this->filter_values['expense_status_id']) ? $this->filter_values['expense_status_id'] : '',
 				'filter_id' => 'expense_status_id', // задается, если отличается от id
 				'style' => 'id',
-				"sortable" => "DESC",
-			),
-			'executor' => array(
-				'id' => 'executor',
-				'name' => $this->controller->t->_("text_entity_property_executor"),
-				'filter' => 'text',
-				'filter_value' => isset($this->filter_values['executor']) ? $this->filter_values['executor'] : '',
-				"sortable" => "DESC",
-			),
-			'amount' => array(
-				'id' => 'amount',
-				'name' => $this->controller->t->_("text_entity_property_amount"),
-				'filter' => 'text',
-				'filter_value' => isset($this->filter_values['amount']) ? $this->filter_values['amount'] : '',
 				"sortable" => "DESC",
 			),
 			'operations' => array(

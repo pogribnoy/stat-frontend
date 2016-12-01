@@ -18,21 +18,21 @@
 			<ul class="nav navbar-nav">
 				<li class="<?php if($controller->controllerName == 'index' && $controller->actionName == 'index') { ?>active<?php } ?>"><a href="/index">Главная</a></li>
 				<li class="<?php if($controller->controllerName == 'newslist' && $controller->actionName == 'index') { ?>active<?php } ?>"><a href="/newslist">Новости</a></li>
-				<li class="<?php if(($controller->controllerName == 'expensetypelist' || $controller->controllerName == 'expensetype') && $controller->actionName == 'index') { ?>active<?php } ?>"><a href="/expensetypelist">Общая статистика<!--statistics--></a></li>
+				<!--<li class="<?php if(($controller->controllerName == 'expensetypelist' || $controller->controllerName == 'expensetype') && $controller->actionName == 'index') { ?>active<?php } ?>"><a href="/expensetypelist">Общая статистика</a></li>-->
 				<li class="<?php if($controller->controllerName == 'about' && $controller->actionName == 'index') { ?>active<?php } ?>"><a href="/about">О проекте</a></li>			
 				<!--<li class="" data-toggle="modal" data-target="#supportRequestModal"><a href="#" >Обращение в службу поддержки</a></li>-->
 			</ul>
 		</div><!-- /.navbar-collapse -->
-		<div class="controls controls-row navbar-right">
+		<!--<div class="controls controls-row navbar-right">
 			<ul class="nav navbar-nav">
 				<div id="authButtons">
-					<span name="userName"><?php if(isset($controller->userData['name'])) echo $controller->userData['name']; ?></span>
+					<span name="userName"><?php /*if(isset($controller->userData['name'])) echo $controller->userData['name']; ?></span>
 					<button name="logout" type="button" class="btn btn-default navbar-btn" onclick="frontendLogout();" style="<?php if(!isset($controller->userData['name'])) { ?>display:none;<?php } ?>">Выйти</button>
 					<button name="login" type="button" class="btn btn-primary navbar-btn" data-toggle="modal" data-target="#logonModal" style="<?php if(isset($controller->userData['name'])) { ?>display:none;<?php } ?>">Вход</button>
-					<button name="register" type="button" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#registerModal" style="<?php if(isset($controller->userData['name'])) { ?>display:none;<?php } ?>">Регистрация</button>
+					<button name="register" type="button" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#registerModal" style="<?php if(isset($controller->userData['name'])) { ?>display:none;<?php }*/ ?>">Регистрация</button>
 				</div>
 			</ul>
-		</div>
+		</div>-->
 	</div><!-- /.container-fluid -->
 </nav>
 

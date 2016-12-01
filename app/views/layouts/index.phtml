@@ -28,7 +28,6 @@
 			</div>
 			<div class="modal-body">
 				<div class="row">
-					<div class="col-lg-1"></div>
 					<div class="col-lg-offset-1 col-lg-10 center-block">
 						<div class="form-signin">
 							<h2 class="form-signin-heading text-center">Авторизация</h2>
@@ -52,7 +51,7 @@
 								</label>
 							</div>
 							<!--<button class="btn btn-lg btn-primary btn-block" type="submit" formmethod="get" formaction="/session/start">Войти</button>-->
-							<button class="btn btn-primary btn-block" onclick="frontendLogin();">Войти</button>
+							<button type="button" class="btn btn-primary btn-block" onclick="frontendLogin();">Войти</button>
 						</div>
 					</div>
 				</div>
@@ -72,7 +71,6 @@
 			</div>
 			<div class="modal-body">
 				<div class="row">
-					<div class="col-lg-1"></div>
 					<div class="col-lg-offset-1 col-lg-10 center-block">
 						<!-- wizard: http://vadimg.com/twitter-bootstrap-wizard-example/#examples -->
 						<div class="form-signin">
@@ -98,7 +96,7 @@
 							</div>
 							<div class="row"><div class="col-lg-12 text-center">&nbsp;</div></div>
 							<!--<button class="btn btn-lg btn-primary btn-block" type="submit" formmethod="get" formaction="/session/start">Войти</button>-->
-							<button class="btn btn-primary btn-block" onclick="register();">Зарегистрироваться</button>
+							<button type="button" class="btn btn-primary btn-block" onclick="register();">Зарегистрироваться</button>
 						</div>
 					</div>
 				</div>
@@ -120,7 +118,6 @@
 			</div>
 			<div class="modal-body">
 				<div class="row">
-					<div class="col-lg-1"></div>
 					<div class="col-lg-offset-1 col-lg-10 center-block">
 						<!-- wizard: http://vadimg.com/twitter-bootstrap-wizard-example/#examples -->
 						<form class="form">
@@ -131,7 +128,7 @@
 									<span >Тема</span>
 								</div>
 								<div class="col-lg-9">
-									<input type="topic" id="topic" class="form-control" placeholder="" autofocus="">
+									<input type="text" id="topic" class="form-control" placeholder="" autofocus="">
 								</div>
 							</div>
 							<div class="row"><div class="col-lg-12 text-center">&nbsp;</div></div>
@@ -149,12 +146,12 @@
 									<span >Направить ответ</span>
 								</div>
 								<div class="col-lg-9">
-									<input type="topic" id="topic" class="form-control" placeholder="Email" autofocus="">
+									<input type="text" id="topic" class="form-control" placeholder="Email" autofocus="">
 								</div>                                        
 							</div>
 							<div class="row"><div class="col-lg-12 text-center">&nbsp;</div></div>
 							<!--<button class="btn btn-lg btn-primary btn-block" type="submit" formmethod="get" formaction="/session/start">Войти</button>-->
-							<button class="btn btn-primary btn-block" onclick="">Отправить</button>
+							<button type="button" class="btn btn-primary btn-block" onclick="">Отправить</button>
 						</form>
 					</div>
 				</div>
