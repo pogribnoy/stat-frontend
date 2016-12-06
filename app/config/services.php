@@ -94,12 +94,40 @@ $di->setShared('db', function() use ($config) {
 });
 
 $di->setShared('modelsManager', function() {
-      return new \Phalcon\Mvc\Model\Manager();
+      return new Phalcon\Mvc\Model\Manager();
  });
 
 // Если настройки предписывают использование metadata-адаптера, то необходимо его использовать, иначе следует использовать memory
 $di->set('modelsMetadata', function() {
-	return new MetaData();
+	return new Phalcon\Mvc\Model\Metadata\Files(array(
+		'metaDataDir' => APP_PATH . 'app/cache/metadata/',
+	));
+});
+
+$di->set('viewCache', function() {
+	// Создание frontend для выходных данных. Кэшируем файлы на 3600 секунд
+	$frontCache = new Phalcon\Cache\Frontend\Output([
+		"lifetime" => 10,
+	]);
+
+	// Создаем компонент, который будем кэшировать из "Выходных данных" в "Файл"
+	// Устанавливаем папку для кэшируемых файлов - важно указать символ "/" в конце пути
+	return new Phalcon\Cache\Backend\File($frontCache, [
+		"cacheDir" => APP_PATH . 'app/cache/views/',
+	]);
+});
+
+$di->set('dataCache', function() {
+	// Создание frontend для выходных данных. Кэшируем файлы на 3600 секунд
+	$frontCache = new Phalcon\Cache\Frontend\Data([
+		"lifetime" => 10,
+	]);
+
+	// Создаем компонент, который будем кэшировать из "Выходных данных" в "Файл"
+	// Устанавливаем папку для кэшируемых файлов - важно указать символ "/" в конце пути
+	return new Phalcon\Cache\Backend\File($frontCache, [
+		"cacheDir" => APP_PATH . 'app/cache/',
+	]);
 });
 
 // Создать сессию при первом обращении какого-либо компонента к сервису сессий

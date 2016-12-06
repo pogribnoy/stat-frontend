@@ -5,6 +5,9 @@ class AboutController extends ControllerBase {
 	}
 	
 	public function indexAction() {
-		$this->view->setVar("page_header", $this->t->_('text_' . $this->controllerName . '_title'));
+		$this->view->cache([
+			"lifetime" => 86400,
+			"key"      => $this->viewCacheKey,
+		]);
 	}
 }
