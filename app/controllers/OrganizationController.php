@@ -102,7 +102,8 @@ class OrganizationController extends ControllerBase {
 						"bind" => [1 => $org["id"]["value"]]
 					]);
 					$expenseTypes[$row->id]['prcnt'] = number_format($expenseTypes[$row->id]['sum']/$totalSum, 2, '.', '');
-					$expenseTypes[$row->id]['sum'] = number_format($expenseTypes[$row->id]['sum']/100, 2, '.', '');
+					//$expenseTypes[$row->id]['sum'] = number_format($expenseTypes[$row->id]['sum']/100, 2, '.', '');
+					//$expenseTypes[$row->id]['sum'] = $expenseTypes[$row->id]['sum'];
 				}
 				//$this->logger->log('expenseTypes: ' . json_encode($expenseTypes));
 				

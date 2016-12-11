@@ -6,6 +6,8 @@ class ExpenseListController extends ControllerList {
 	
 	public function initialize() {
 		parent::initialize();
+		//$this->view->cleanTemplateAfter();
+		//$this->view->setTemplateBefore('index');
 	}
 
 	public function indexAction() {
@@ -67,12 +69,13 @@ class ExpenseListController extends ControllerList {
 				'style' => 'id',
 				"sortable" => "DESC",
 			),
-			'organization_name' => array(
-				'id' => 'organization_name',
-				'name' => $this->controller->t->_("text_expenselist_organization_name"),
+			'settlement' => array(
+				'id' => 'settlement',
+				'name' => $this->controller->t->_("text_expenselist_settlement"),
 				'filter' => 'text',
-				'filter_value' => isset($this->filter_values['organization_name']) ? $this->filter_values['organization_name'] : '',
+				'filter_value' => isset($this->filter_values['settlement']) ? $this->filter_values['settlement'] : '',
 				"sortable" => "DESC",
+				'nullSubstitute' => '-',
 			),
 			'name' => array(
 				'id' => 'name',
@@ -151,6 +154,17 @@ class ExpenseListController extends ControllerList {
 				'name' => $this->controller->t->_("text_entity_property_actions"),
 			)
 		);
+	}
+	
+	public function createDescriptorObject() {
+		parent::createDescriptorObject();
+		
+		if(isset($this->filter_values["organization_id"])) {
+			$org = false;
+			$org = Organization::findFirst(['conditions' => 'id=?1', 'bind' => [1 => $this->filter_values["organization_id"]]]);
+			if($org) $this->view->setVar('page_header', $org->name); //$this->descriptor['page_header'] = $org->name;
+		}
+		//$this->logger->log(json_encode($this->descriptor));
 	}
 	
 	/* 
@@ -249,6 +263,11 @@ class ExpenseListController extends ControllerList {
 					'value_id' => $row->organization_region_id ? $row->organization_region_id : '',
 					'value' => $row->organization_region_name ? $row->organization_region_name : '',
 				),*/
+				"settlement" => array(
+					'id' => 'settlement',
+					//'value_id' => $row->expense->organization_id ? $row->expense->organization_id : '',
+					'value' => $row->expense->settlement ? $row->expense->settlement : '',
+				),
 				"expense_type" => array(
 					'value_id' => $row->expense_type_id ? $row->expense_type_id : '',
 					'value' => $row->expense_type_name ? $row->expense_type_name : '',
@@ -267,15 +286,12 @@ class ExpenseListController extends ControllerList {
 				),
 				"name" => array(
 					'id' => 'name',
-					'value' =>  $row->expense->name,
-				),
-				"organization_name" => array(
-					'value_id' => $row->organization_id ? $row->organization_id : '',
-					'value' => $row->organization_name ? $row->organization_name : '',
+					'value' =>  $row->expense->name ? $row->expense->name: '',
 				),
 				"amount" => array(
 					'id' => 'amount',
-					'value' => $row->expense->amount != null ? number_format($row->expense->amount / 100, 2, '.', ' ') : '',
+					//'value' => $row->expense->amount != null ? number_format($row->expense->amount / 100, 2, '.', ' ') : '',
+					'value' => $row->expense->amount ? $row->expense->amount : '',
 				),
 				/*"date" => array(
 					'id' => 'date',
@@ -296,7 +312,8 @@ class ExpenseListController extends ControllerList {
 				),
 			)
 		);
-		if($row->organization_id) $item['fields']['organization_name']['url'] = '/organization?id=' . $row->organization_id;
+		
+		//if($filter_values["organization_id"]) $item['fields']['organization_name']['url'] = '/organization?id=' . $row->organization_id;
 		$this->items[] = $item;
 	}
 }

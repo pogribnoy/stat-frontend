@@ -24,7 +24,7 @@
 </div>
 <div class="row-fluid"><p></p></div>
 <div class="row-fluid">
-	<button id="showExpenses" type="button" class="btn btn-primary" onclick="document.location = '/expenselist?filter_organization_name=<?php echo $org['name']['value']; ?>'">Перейти к расходам</button>
+	<button id="showExpenses" type="button" class="btn btn-primary" onclick="document.location = '/expenselist?filter_organization_id=<?php echo $org['id']['value']; ?>'">Перейти к расходам</button>
 	<button id="organizationRequest" type="button" class="btn btn-default" onclick="organizationRequest(<?php echo $org["id"]["value"]; ?>);">Задать вопрос</button>
 </div>
 <div class="row-fliud">
@@ -63,8 +63,10 @@ function drawChart() {
 		data.addRows(descriptor.rows);
 		
 		var formatter = new google.visualization.NumberFormat({
+			fractionDigits: 0,
 			groupingSymbol: ' ',
-			suffix: ' р.',
+			suffix: ' тыс. р.',
+			//pattern: '###############',
 		});
 		formatter.format(data, 1);
 		formatter.format(data, 2);
@@ -85,7 +87,7 @@ function drawChart() {
 				var value = row[0] + ' = ' + row[1];
 				//alert('Выбрано: ' + value);
 				console.log('Выбрано: ' + value);
-				var url = '/expenselist?filter_expense_type_id=' + row[3];
+				var url = '/expenselist?filter_expense_type_id=' + row[3] + '&' + 'filter_organization_id=<?php echo $org['id']['value']; ?>';
 				document.location = url;
 				
 				console.log('document.location = ' + url);

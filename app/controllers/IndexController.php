@@ -22,13 +22,14 @@ class IndexController extends ControllerBase {
 			$organizations = array();
 			foreach ($organizations_rows as $row) {
 				// наполняем массив
-				$organizations[$row->id] =  [
+				$organizations[] = [
+					'id' => $row->id,
 					'name' => $row->name,
 					'regionID' => $row->region_id,
 				];
 			}
 			
-			$this->view->setVar("page_header", $this->t->_("text_site_full_name"));
+			//$this->view->setVar("page_header", $this->t->_("text_site_full_name"));
 			$this->view->setVar("regions", $regions);
 			$this->view->setVar("organizations", $organizations);
 		}

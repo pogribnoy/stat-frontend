@@ -24,8 +24,7 @@
     </head>
     <body>
 		<div class="container">
-			<!--<br>layouts\index-->
-<!--<br>layouts\menu-->
+			<!--<br>layouts\menu-->
 
 <nav class="navbar navbar-default" role="navigation">
 	<div class="container-fluid">
@@ -62,7 +61,8 @@
 
 <script type="text/javascript"><!--
 
-//--></script>
+//--></script>			<!--<br>layouts\index-->
+
 <div class="row-fluid">
 	<h1 class="page-header">Юрьев-Польский</h1>
 </div><!-- /.row-fluid -->
@@ -97,7 +97,7 @@
 </div>
 <div class="row-fluid"><p></p></div>
 <div class="row-fluid">
-	<button id="showExpenses" type="button" class="btn btn-primary" onclick="document.location = '/expenselist?filter_organization_name=Юрьев-Польский'">Перейти к расходам</button>
+	<button id="showExpenses" type="button" class="btn btn-primary" onclick="document.location = '/expenselist?filter_organization_id=46'">Перейти к расходам</button>
 	<button id="organizationRequest" type="button" class="btn btn-default" onclick="organizationRequest(46);">Задать вопрос</button>
 </div>
 <div class="row-fliud">
@@ -117,16 +117,16 @@ var descriptor = {
 		{type: 'number', value: 'Идентификатор'}
 	],
 	rows: [
-						['Образование', 0.00, 0.00, 1],
-							['Прочие расходы', 0.00, 0.00, 2],
-							['Жилищно-коммунальный фонд', 0.00, 0.00, 3],
-							['Дорожно-транспортная система', 0.00, 0.00, 4],
-							['Здравоохранение', 0.00, 0.00, 5],
-							['Культура, спорт, отдых', 0.00, 0.00, 6],
-							['Собственные расходы', 0.00, 0.00, 7],
-							['Социальная поддержка', 0.00, 0.00, 8],
-							['Экономика', 0.00, 0.00, 9],
-							['Безопасность', 10.00, 1.00, 10],
+						['Образование', , 0.00, 1],
+							['Прочие расходы', , 0.00, 2],
+							['Жилищно-коммунальный фонд', , 0.00, 3],
+							['Дорожно-транспортная система', , 0.00, 4],
+							['Здравоохранение', , 0.00, 5],
+							['Культура, спорт, отдых', , 0.00, 6],
+							['Собственные расходы', , 0.00, 7],
+							['Социальная поддержка', , 0.00, 8],
+							['Экономика', , 0.00, 9],
+							['Безопасность', 11001, 1.00, 10],
 						]
 }
 google.charts.load('current', {packages: ['corechart']});
@@ -141,8 +141,10 @@ function drawChart() {
 		data.addRows(descriptor.rows);
 		
 		var formatter = new google.visualization.NumberFormat({
+			fractionDigits: 0,
 			groupingSymbol: ' ',
-			suffix: ' р.',
+			suffix: ' тыс. р.',
+			//pattern: '###############',
 		});
 		formatter.format(data, 1);
 		formatter.format(data, 2);
@@ -163,7 +165,7 @@ function drawChart() {
 				var value = row[0] + ' = ' + row[1];
 				//alert('Выбрано: ' + value);
 				console.log('Выбрано: ' + value);
-				var url = '/expenselist?filter_expense_type_id=' + row[3];
+				var url = '/expenselist?filter_expense_type_id=' + row[3] + '&' + 'filter_organization_id=46';
 				document.location = url;
 				
 				console.log('document.location = ' + url);
@@ -533,8 +535,12 @@ function frontendLogout() {
 								{{include tmpl = ~descriptor.actionName + "_entity_field_text" /}}
 							{{else type == "amount"}}
 								{{include tmpl = ~descriptor.actionName + "_entity_field_amount" /}}
+							{{else type == "number"}}
+								{{include tmpl = ~descriptor.actionName + "_entity_field_text" /}}
 							{{else type == "date"}}
 								{{include tmpl = ~descriptor.actionName + "_entity_field_text" /}}
+							{{else type == "period"}}
+								{{include tmpl = ~descriptor.actionName + "_entity_field_period" /}}
 							{{else type == "password"}}
 								{{include tmpl = ~descriptor.actionName + "_entity_field_password" /}}
 							{{else type == "bool"}}
@@ -744,7 +750,7 @@ function entitySaveToLocalFromHTML(container_id) {
 		var errorMsg = '';
 		
 		for(field_id in descriptor.fields) {
-			val = null;
+			val = null, val1 = null, val2 = null;
 			val_id = null;
 			field = descriptor.fields[field_id];
 			
@@ -756,6 +762,14 @@ function entitySaveToLocalFromHTML(container_id) {
 						if(field_jqobj.length>0) val = field_jqobj.val();
 						else val = "";
 						if(field.type=='password') val = sha1(val);
+					}
+					else if(field.type=='period') {
+						field_jqobj1 = jqobj.find("#field_"+field.id+"_value1");
+						field_jqobj2 = jqobj.find("#field_"+field.id+"_value2");
+						if(field_jqobj1.length>0) val1 = field_jqobj1.val();
+						else val1 = "";
+						if(field_jqobj2.length>0) val2 = field_jqobj2.val();
+						else val2 = "";
 					}
 					else if(field.type=='select') {
 						field_jqobj = jqobj.find("#field_"+field.id+"_value");
@@ -778,12 +792,7 @@ function entitySaveToLocalFromHTML(container_id) {
 					}
 					
 					// проверка на обязательность не зависимо от типа
-					if(field.required && field.required != "undefined" && (val == null || val == '' || val == 'undefined') && val_id != "*") {
-						errorMsg += '<li>Поле "' +  field.name + '" обязательно для указания</li>';
-						/*error.messages.push({
-							title: "Ошибка",
-							msg: 'Поле "' +  field.name + '" обязательно для указания',
-						});*/
+					if(field.required && field.required != "undefined" && (val == null || val == '' || val == 'undefined' || (val == null && val1 == null && val2 == null)) && val_id != "*") {
 					}
 					// выполняем остальные проверки
 					else {
@@ -791,30 +800,35 @@ function entitySaveToLocalFromHTML(container_id) {
 							if((val != null && val.length>0) || val == "") {
 								if(/^\d{1,15}.?\d{0,2}$/.test(val)==null) {
 									errorMsg += '<li>Поле "' + field.name + '" содержит значение, не соответствующее формату десятичного числа</li>';
-									/*error.messages.push({
-										title: "Ошибка",
-										msg: 'Поле "' + field.name + '" содержит значение, не соответствующее формату десятичного числа',
-									});*/
 								}
 								else {
 									realVal = null;
 									var pos = val.indexOf('.');
-									if(pos>=0) val = val.replace(".", '');
-									else val += "00";
-									realVal = parseInt(val, 10);
+									var cents;
+									if(pos>=0) cents = val.replace(".", '');
+									else cents = val + "00";
+									realVal = parseInt(cents, 10);
 									if(realVal != null && field.min && realVal < field.min) {
 										errorMsg += '<li>Поле "' + field.name + '" содержит значение меньше допустимого</li>';
-										/*error.messages.push({
-											title: "Ошибка",
-											msg: 'Поле "' + field.name + '" содержит значение меньше допустимого',
-										});*/
 									}
 									if(realVal != null && field.max && realVal > field.max) {
 										errorMsg += '<li>Поле "' + field.name + '" содержит значение больше допустимого</li>';
-										/*error.messages.push({
-											title: "Ошибка",
-											msg: 'Поле "' + field.name + '" содержит значение больше допустимого',
-										});*/
+									}
+								}
+							}
+						}
+						else if(field.type == 'number' && val != null && val != '' && val != 'undefined') {
+							if((val != null && val.length>0) || val == "") {
+								if(/^\d{0,18}$/.test(val)==null) {
+									errorMsg += '<li>Поле "' + field.name + '" содержит значение, не соответствующее формату десятичного числа</li>';
+								}
+								else {
+									realVal = parseInt(val, 10);
+									if(realVal != null && field.min && realVal < field.min) {
+										errorMsg += '<li>Поле "' + field.name + '" содержит значение меньше допустимого</li>';
+									}
+									if(realVal != null && field.max && realVal > field.max) {
+										errorMsg += '<li>Поле "' + field.name + '" содержит значение больше допустимого</li>';
 									}
 								}
 							}
@@ -822,31 +836,27 @@ function entitySaveToLocalFromHTML(container_id) {
 						else if(field.type == 'email' && val != null && val != '' && val != 'undefined') {
 							if(val.indexOf('@') == -1) {
 								errorMsg += '<li>Поле "' + field.name + '" содержит значение, не соответствущее адресу электронной почты</li>';
-								/*error.messages.push({
-									title: "Ошибка",
-									msg: 'Поле "' + field.name + '" содержит значение, не соответствущее адресу электронной почты',
-								});*/
 							}
+						}
+						else if((field.type == 'period') && val1 != null && val1 != '' && val1 != 'undefined' && val2 != null && val2 != '' && val2 != 'undefined') {
+							// TODO. Проверять, чтобы дата from не была больше даты to
 						}
 						else if((field.type == 'text' || val == 'textarea') && val != null && val != '' && val != 'undefined') {
 							if(field.min && val.length < field.min) {
 								errorMsg += '<li>Поле "' + field.name + '" содержит слишком короткое значение (должно быть не менее ' + field.min + ' символов)</li>';
-								/*error.messages.push({
-									title: "Ошибка",
-									msg: 'Поле "' + field.name + '" содержит слишком короткое значение (должно быть не менее ' + field.min + ' символов)',
-								});*/
 							}
 							if(field.max && val.length > field.max) {
 								errorMsg += '<li>Поле "' + field.name + '" содержит слишком длинное значение (должно быть не более ' + field.max + ' символов)</li>';
-								/*error.messages.push({
-									title: "Ошибка",
-									msg: 'Поле "' + field.name + '" содержит слишком длинное значение (должно быть не более ' + field.max + ' символов)',
-								});*/
 							}
 						}
 					}
 					if(errorMsg.length==0) { 
 						if(val != null && val != "undefined") tmpFields[field.id] = {value: val};
+						if((val1 != null && val1 != "undefined") || (val2 != null && val2 != "undefined")) {
+							tmpFields[field.id] = {};
+							if(val1 != null && val1 != "undefined") tmpFields[field.id].value1 = val1;
+							if(val2 != null && val2 != "undefined") tmpFields[field.id].value2 = val2;
+						}
 						if(val_id != null && val_id != "undefined") tmpFields[field.id].value_id = val_id;
 					}
 				}
@@ -863,8 +873,10 @@ function entitySaveToLocalFromHTML(container_id) {
 			// переносим значения в локальную сущность
 			for(tmpID in tmpFields) {
 				tmpField = tmpFields[tmpID];
-				descriptor.fields[tmpID].value = tmpField.value;//encodeURIComponent(tmpField.value);
-				descriptor.fields[tmpID].value_id = tmpField.value_id;//encodeURIComponent(tmpField.value_id);
+				if(tmpField.value) descriptor.fields[tmpID].value = tmpField.value;//encodeURIComponent(tmpField.value);
+				if(tmpField.value1) descriptor.fields[tmpID].value1 = tmpField.value1;//encodeURIComponent(tmpField.value);
+				if(tmpField.value2) descriptor.fields[tmpID].value2 = tmpField.value2;//encodeURIComponent(tmpField.value);
+				if(tmpField.value_id)descriptor.fields[tmpID].value_id = tmpField.value_id;//encodeURIComponent(tmpField.value_id);
 				//field.value = val;
 				//if(val_id != "undefined") field.value_id = val_id;
 			}
@@ -894,6 +906,8 @@ function entitySaveToServer(descriptor){
 		clearFields[key] = {
 			id: descriptor.fields[key]['id'],
 			value: descriptor.fields[key]['value'],
+			value1: descriptor.fields[key]['value1'],
+			value2: descriptor.fields[key]['value2'],
 			value_id: descriptor.fields[key]['value_id'],
 		};
 	}
@@ -1602,7 +1616,8 @@ function apply_filter(container_id) {
 	if (page_size) rq.page_size = encodeURIComponent(page_size);
 	
 	// пробегаемся по столбцам, чтобы собрать данные фильтров в столбцах данных
-	var columns = jqobj.find("table tr:eq(2) td");
+	var tr_offs = descriptor.group_operations.length > 0 ? 2 : 1;
+	var columns = jqobj.find("table tr:eq("+tr_offs+") td");
 	var columns_length = columns.length;
 	for(var i=0; i<columns_length; i++){
 		var field = columns.eq(i).find("input[name^='filter_']").filter("[type='text'], [type='number'], [type='email']");
@@ -1621,10 +1636,15 @@ function apply_filter(container_id) {
 			}
 		}
 	}
+	// TODO. Доп. фильтры не используются с клиента. Надо удалить
 	// доп. фильтры
 	if(data.add_filter) {
 		rq.add_filter = {};
 		for (var key in data.add_filter) rq.add_filter[key] = data.add_filter[key];
+	}
+	// статичные фильтры
+	if(static_filter_values) {
+		for (var key in static_filter_values) rq[key] = static_filter_values[key];
 	}
 	
 	console.log(url);
@@ -1730,7 +1750,8 @@ function change_page_size(container_id){
 // Очистка бизнес-полей фильтра, запрашивает и выводит отфильтрованные данные
 function clear_filter(container_id) {
 	var data = containers[container_id].data;
-	var columns = containers[container_id].jqobj.find("#" + createUDID(data) + " table tr:eq(2) td");
+	var tr_offs = descriptor.group_operations.length > 0 ? 2 : 1;
+	var columns = containers[container_id].jqobj.find("#" + createUDID(data) + " table tr:eq("+tr_offs+") td");
 	for(var i=0;i<columns.length;i++){
 		columns.eq(i).find("input[name^='filter_'], select[name^='filter_']").each(function(){
 			$(this).val("");

@@ -24,8 +24,7 @@
     </head>
     <body>
 		<div class="container">
-			<!--<br>layouts\index-->
-<!--<br>layouts\menu-->
+			<!--<br>layouts\menu-->
 
 <nav class="navbar navbar-default" role="navigation">
 	<div class="container-fluid">
@@ -62,9 +61,10 @@
 
 <script type="text/javascript"><!--
 
-//--></script>
+//--></script><!--<br>layouts\index-->
+
 <div class="row-fluid">
-	<h1 class="page-header">Интернет портал общедоступной информации о расходах муниципальных образований «Расходы города»</h1>
+	<h1 class="page-header">Проект "Расходы города"</h1>
 </div><!-- /.row-fluid -->
 	
 <div class="row-fluid">
@@ -129,7 +129,8 @@
 <script type="text/javascript"><!--
 
 var regions = {"21":"\u0410\u0441\u0442\u0440\u0430\u0445\u0430\u043d\u0441\u043a\u0430\u044f \u043e\u0431\u043b\u0430\u0441\u0442\u044c","20":"\u0412\u043b\u0430\u0434\u0438\u043c\u0438\u0440\u0441\u043a\u0430\u044f \u043e\u0431\u043b\u0430\u0441\u0442\u044c"};
-var organizations = {"38":{"name":"\u0410\u043b\u0435\u043a\u0441\u0430\u043d\u0434\u0440\u043e\u0432","regionID":"20"},"36":{"name":"\u0412\u043b\u0430\u0434\u0438\u043c\u0438\u0440","regionID":"20"},"35":{"name":"\u0412\u044f\u0437\u043d\u0438\u043a\u0438","regionID":"20"},"34":{"name":"\u0413\u043e\u0440\u043e\u0445\u043e\u0432\u0435\u0446","regionID":"20"},"33":{"name":"\u0413\u0443\u0441\u044c-\u0425\u0440\u0443\u0441\u0442\u0430\u043b\u044c\u043d\u044b\u0439","regionID":"20"},"30":{"name":"\u041a\u0430\u043c\u0435\u0448\u043a\u043e\u0432\u043e","regionID":"20"},"28":{"name":"\u041a\u0430\u0440\u0430\u0431\u0430\u043d\u043e\u0432\u043e","regionID":"20"},"27":{"name":"\u041a\u0438\u0440\u0436\u0430\u0447","regionID":"20"},"26":{"name":"\u041a\u043e\u0432\u0440\u043e\u0432","regionID":"20"},"25":{"name":"\u041a\u043e\u043b\u044c\u0447\u0443\u0433\u0438\u043d\u043e","regionID":"20"},"24":{"name":"\u041a\u043e\u0441\u0442\u0435\u0440\u0451\u0432\u043e","regionID":"20"},"23":{"name":"\u041a\u0443\u0440\u043b\u043e\u0432\u043e","regionID":"20"},"22":{"name":"\u041b\u0430\u043a\u0438\u043d\u0441\u043a","regionID":"20"},"21":{"name":"\u041c\u0435\u043b\u0435\u043d\u043a\u0438","regionID":"20"},"2":{"name":"\u041c\u0443\u0440\u043e\u043c","regionID":"20"},"1":{"name":"\u041f\u0435\u0442\u0443\u0448\u043a\u0438","regionID":"20"},"40":{"name":"\u041f\u043e\u043a\u0440\u043e\u0432","regionID":"20"},"41":{"name":"\u0420\u0430\u0434\u0443\u0436\u043d\u044b\u0439","regionID":"20"},"42":{"name":"\u0421\u043e\u0431\u0438\u043d\u043a\u0430","regionID":"20"},"43":{"name":"\u0421\u0442\u0440\u0443\u043d\u0438\u043d\u043e","regionID":"20"},"44":{"name":"\u0421\u0443\u0434\u043e\u0433\u0434\u0430","regionID":"20"},"45":{"name":"\u0421\u0443\u0437\u0434\u0430\u043b\u044c","regionID":"20"},"46":{"name":"\u042e\u0440\u044c\u0435\u0432-\u041f\u043e\u043b\u044c\u0441\u043a\u0438\u0439","regionID":"20"}};
+var organizations = [{"id":"38","name":"\u0410\u043b\u0435\u043a\u0441\u0430\u043d\u0434\u0440\u043e\u0432","regionID":"20"},{"id":"36","name":"\u0412\u043b\u0430\u0434\u0438\u043c\u0438\u0440","regionID":"20"},{"id":"35","name":"\u0412\u044f\u0437\u043d\u0438\u043a\u0438","regionID":"20"},{"id":"34","name":"\u0413\u043e\u0440\u043e\u0445\u043e\u0432\u0435\u0446","regionID":"20"},{"id":"33","name":"\u0413\u0443\u0441\u044c-\u0425\u0440\u0443\u0441\u0442\u0430\u043b\u044c\u043d\u044b\u0439","regionID":"20"},{"id":"30","name":"\u041a\u0430\u043c\u0435\u0448\u043a\u043e\u0432\u043e","regionID":"20"},{"id":"28","name":"\u041a\u0430\u0440\u0430\u0431\u0430\u043d\u043e\u0432\u043e","regionID":"20"},{"id":"27","name":"\u041a\u0438\u0440\u0436\u0430\u0447","regionID":"20"},{"id":"26","name":"\u041a\u043e\u0432\u0440\u043e\u0432","regionID":"20"},{"id":"25","name":"\u041a\u043e\u043b\u044c\u0447\u0443\u0433\u0438\u043d\u043e","regionID":"20"},{"id":"24","name":"\u041a\u043e\u0441\u0442\u0435\u0440\u0451\u0432\u043e","regionID":"20"},{"id":"23","name":"\u041a\u0443\u0440\u043b\u043e\u0432\u043e","regionID":"20"},{"id":"22","name":"\u041b\u0430\u043a\u0438\u043d\u0441\u043a","regionID":"20"},{"id":"21","name":"\u041c\u0435\u043b\u0435\u043d\u043a\u0438","regionID":"20"},{"id":"2","name":"\u041c\u0443\u0440\u043e\u043c","regionID":"20"},{"id":"1","name":"\u041f\u0435\u0442\u0443\u0448\u043a\u0438","regionID":"20"},{"id":"40","name":"\u041f\u043e\u043a\u0440\u043e\u0432","regionID":"20"},{"id":"41","name":"\u0420\u0430\u0434\u0443\u0436\u043d\u044b\u0439","regionID":"20"},{"id":"42","name":"\u0421\u043e\u0431\u0438\u043d\u043a\u0430","regionID":"20"},{"id":"43","name":"\u0421\u0442\u0440\u0443\u043d\u0438\u043d\u043e","regionID":"20"},{"id":"44","name":"\u0421\u0443\u0434\u043e\u0433\u0434\u0430","regionID":"20"},{"id":"45","name":"\u0421\u0443\u0437\u0434\u0430\u043b\u044c","regionID":"20"},{"id":"46","name":"\u042e\u0440\u044c\u0435\u0432-\u041f\u043e\u043b\u044c\u0441\u043a\u0438\u0439","regionID":"20"}];
+console.log(organizations);
 
 function onRegionChange(ctrl) {
 	var regID = ctrl.value;
@@ -139,13 +140,13 @@ function onRegionChange(ctrl) {
 	if(regID == '*') {
 		for (var id in organizations) {
 			var org = organizations[id];
-			optionsHTML += '<option value="' + id + '">' + org.name + ' (' + regions[org['regionID']] + ')</option>';
+			optionsHTML += '<option value="' + org.id + '">' + org.name + ' (' + regions[org['regionID']] + ')</option>';
 		}
 	}
 	else {
 		for (var id in organizations) {
 			var org = organizations[id];
-			if(org.regionID == regID) optionsHTML += '<option value="' + id + '">' + org.name + ' (' + regions[org['regionID']] + ')</option>';
+			if(org.regionID == regID) optionsHTML += '<option value="' + org.id + '">' + org.name + ' (' + regions[org['regionID']] + ')</option>';
 		}
 	}
 	selectOrgs.append(optionsHTML);
@@ -520,6 +521,8 @@ function frontendLogout() {
 								{{include tmpl = ~descriptor.actionName + "_entity_field_text" /}}
 							{{else type == "amount"}}
 								{{include tmpl = ~descriptor.actionName + "_entity_field_amount" /}}
+							{{else type == "number"}}
+								{{include tmpl = ~descriptor.actionName + "_entity_field_text" /}}
 							{{else type == "date"}}
 								{{include tmpl = ~descriptor.actionName + "_entity_field_text" /}}
 							{{else type == "period"}}
@@ -791,6 +794,22 @@ function entitySaveToLocalFromHTML(container_id) {
 									if(pos>=0) cents = val.replace(".", '');
 									else cents = val + "00";
 									realVal = parseInt(cents, 10);
+									if(realVal != null && field.min && realVal < field.min) {
+										errorMsg += '<li>Поле "' + field.name + '" содержит значение меньше допустимого</li>';
+									}
+									if(realVal != null && field.max && realVal > field.max) {
+										errorMsg += '<li>Поле "' + field.name + '" содержит значение больше допустимого</li>';
+									}
+								}
+							}
+						}
+						else if(field.type == 'number' && val != null && val != '' && val != 'undefined') {
+							if((val != null && val.length>0) || val == "") {
+								if(/^\d{0,18}$/.test(val)==null) {
+									errorMsg += '<li>Поле "' + field.name + '" содержит значение, не соответствующее формату десятичного числа</li>';
+								}
+								else {
+									realVal = parseInt(val, 10);
 									if(realVal != null && field.min && realVal < field.min) {
 										errorMsg += '<li>Поле "' + field.name + '" содержит значение меньше допустимого</li>';
 									}
@@ -1583,7 +1602,8 @@ function apply_filter(container_id) {
 	if (page_size) rq.page_size = encodeURIComponent(page_size);
 	
 	// пробегаемся по столбцам, чтобы собрать данные фильтров в столбцах данных
-	var columns = jqobj.find("table tr:eq(2) td");
+	var tr_offs = descriptor.group_operations.length > 0 ? 2 : 1;
+	var columns = jqobj.find("table tr:eq("+tr_offs+") td");
 	var columns_length = columns.length;
 	for(var i=0; i<columns_length; i++){
 		var field = columns.eq(i).find("input[name^='filter_']").filter("[type='text'], [type='number'], [type='email']");
@@ -1602,10 +1622,15 @@ function apply_filter(container_id) {
 			}
 		}
 	}
+	// TODO. Доп. фильтры не используются с клиента. Надо удалить
 	// доп. фильтры
 	if(data.add_filter) {
 		rq.add_filter = {};
 		for (var key in data.add_filter) rq.add_filter[key] = data.add_filter[key];
+	}
+	// статичные фильтры
+	if (typeof static_filter_values !== "undefined") {
+		for (var key in static_filter_values) rq[key] = static_filter_values[key];
 	}
 	
 	console.log(url);
@@ -1711,7 +1736,8 @@ function change_page_size(container_id){
 // Очистка бизнес-полей фильтра, запрашивает и выводит отфильтрованные данные
 function clear_filter(container_id) {
 	var data = containers[container_id].data;
-	var columns = containers[container_id].jqobj.find("#" + createUDID(data) + " table tr:eq(2) td");
+	var tr_offs = descriptor.group_operations.length > 0 ? 2 : 1;
+	var columns = containers[container_id].jqobj.find("#" + createUDID(data) + " table tr:eq("+tr_offs+") td");
 	for(var i=0;i<columns.length;i++){
 		columns.eq(i).find("input[name^='filter_'], select[name^='filter_']").each(function(){
 			$(this).val("");

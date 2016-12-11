@@ -24,7 +24,7 @@
 					<option value="*" selected="selected"></option>
 					<?php if(isset($organizations)) { 
 						foreach($organizations as $id => $org) { ?>
-							<option value="<?php echo $id; ?>"><?php echo $org['name'] . ' (' . $regions[$org['regionID']] . ')'; ?></option>
+							<option value="<?php echo $org['id']; ?>"><?php echo $org['name'] . ' (' . $regions[$org['regionID']] . ')'; ?></option>
 						<?php } ?>
 					<?php } ?>
 				<select>
@@ -42,6 +42,7 @@
 
 var regions = <?php echo json_encode($regions); ?>;
 var organizations = <?php echo json_encode($organizations); ?>;
+console.log(organizations);
 
 function onRegionChange(ctrl) {
 	var regID = ctrl.value;
@@ -51,13 +52,13 @@ function onRegionChange(ctrl) {
 	if(regID == '*') {
 		for (var id in organizations) {
 			var org = organizations[id];
-			optionsHTML += '<option value="' + id + '">' + org.name + ' (' + regions[org['regionID']] + ')</option>';
+			optionsHTML += '<option value="' + org.id + '">' + org.name + ' (' + regions[org['regionID']] + ')</option>';
 		}
 	}
 	else {
 		for (var id in organizations) {
 			var org = organizations[id];
-			if(org.regionID == regID) optionsHTML += '<option value="' + id + '">' + org.name + ' (' + regions[org['regionID']] + ')</option>';
+			if(org.regionID == regID) optionsHTML += '<option value="' + org.id + '">' + org.name + ' (' + regions[org['regionID']] + ')</option>';
 		}
 	}
 	selectOrgs.append(optionsHTML);

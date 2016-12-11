@@ -21,6 +21,7 @@ $config_array = array(
 		"commonTemplatesDir" => "../stat-backend/app/views/templates/",
 		"commonUpploadURL" => "http://vhost.dlinkddns.com:81/public/",
 		"noImage" => "no_image.jpg",
+		"cacheACL" => 1,
 		"tablePageSizes" => "[30,50,100]", // Ограничение количества строк для таблиц
 		"tableMaxPageSize" => "200", // Максимальное количество строк для таблиц
 		
