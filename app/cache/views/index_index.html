@@ -92,7 +92,8 @@
 			<div class="col-lg-8">
 				<select id="organizationSelect" class="form-control extended" onchange="onOrganizationChange(this);">
 					<option value="*" selected="selected"></option>
-												<option value="38">Александров (Владимирская область)</option>
+												<option value="38">1. Пример (Владимирская область)</option>
+													<option value="47">Александров (Владимирская область)</option>
 													<option value="36">Владимир (Владимирская область)</option>
 													<option value="35">Вязники (Владимирская область)</option>
 													<option value="34">Гороховец (Владимирская область)</option>
@@ -129,7 +130,7 @@
 <script type="text/javascript"><!--
 
 var regions = {"21":"\u0410\u0441\u0442\u0440\u0430\u0445\u0430\u043d\u0441\u043a\u0430\u044f \u043e\u0431\u043b\u0430\u0441\u0442\u044c","20":"\u0412\u043b\u0430\u0434\u0438\u043c\u0438\u0440\u0441\u043a\u0430\u044f \u043e\u0431\u043b\u0430\u0441\u0442\u044c"};
-var organizations = [{"id":"38","name":"\u0410\u043b\u0435\u043a\u0441\u0430\u043d\u0434\u0440\u043e\u0432","regionID":"20"},{"id":"36","name":"\u0412\u043b\u0430\u0434\u0438\u043c\u0438\u0440","regionID":"20"},{"id":"35","name":"\u0412\u044f\u0437\u043d\u0438\u043a\u0438","regionID":"20"},{"id":"34","name":"\u0413\u043e\u0440\u043e\u0445\u043e\u0432\u0435\u0446","regionID":"20"},{"id":"33","name":"\u0413\u0443\u0441\u044c-\u0425\u0440\u0443\u0441\u0442\u0430\u043b\u044c\u043d\u044b\u0439","regionID":"20"},{"id":"30","name":"\u041a\u0430\u043c\u0435\u0448\u043a\u043e\u0432\u043e","regionID":"20"},{"id":"28","name":"\u041a\u0430\u0440\u0430\u0431\u0430\u043d\u043e\u0432\u043e","regionID":"20"},{"id":"27","name":"\u041a\u0438\u0440\u0436\u0430\u0447","regionID":"20"},{"id":"26","name":"\u041a\u043e\u0432\u0440\u043e\u0432","regionID":"20"},{"id":"25","name":"\u041a\u043e\u043b\u044c\u0447\u0443\u0433\u0438\u043d\u043e","regionID":"20"},{"id":"24","name":"\u041a\u043e\u0441\u0442\u0435\u0440\u0451\u0432\u043e","regionID":"20"},{"id":"23","name":"\u041a\u0443\u0440\u043b\u043e\u0432\u043e","regionID":"20"},{"id":"22","name":"\u041b\u0430\u043a\u0438\u043d\u0441\u043a","regionID":"20"},{"id":"21","name":"\u041c\u0435\u043b\u0435\u043d\u043a\u0438","regionID":"20"},{"id":"2","name":"\u041c\u0443\u0440\u043e\u043c","regionID":"20"},{"id":"1","name":"\u041f\u0435\u0442\u0443\u0448\u043a\u0438","regionID":"20"},{"id":"40","name":"\u041f\u043e\u043a\u0440\u043e\u0432","regionID":"20"},{"id":"41","name":"\u0420\u0430\u0434\u0443\u0436\u043d\u044b\u0439","regionID":"20"},{"id":"42","name":"\u0421\u043e\u0431\u0438\u043d\u043a\u0430","regionID":"20"},{"id":"43","name":"\u0421\u0442\u0440\u0443\u043d\u0438\u043d\u043e","regionID":"20"},{"id":"44","name":"\u0421\u0443\u0434\u043e\u0433\u0434\u0430","regionID":"20"},{"id":"45","name":"\u0421\u0443\u0437\u0434\u0430\u043b\u044c","regionID":"20"},{"id":"46","name":"\u042e\u0440\u044c\u0435\u0432-\u041f\u043e\u043b\u044c\u0441\u043a\u0438\u0439","regionID":"20"}];
+var organizations = [{"id":"38","name":"1. \u041f\u0440\u0438\u043c\u0435\u0440","regionID":"20"},{"id":"47","name":"\u0410\u043b\u0435\u043a\u0441\u0430\u043d\u0434\u0440\u043e\u0432","regionID":"20"},{"id":"36","name":"\u0412\u043b\u0430\u0434\u0438\u043c\u0438\u0440","regionID":"20"},{"id":"35","name":"\u0412\u044f\u0437\u043d\u0438\u043a\u0438","regionID":"20"},{"id":"34","name":"\u0413\u043e\u0440\u043e\u0445\u043e\u0432\u0435\u0446","regionID":"20"},{"id":"33","name":"\u0413\u0443\u0441\u044c-\u0425\u0440\u0443\u0441\u0442\u0430\u043b\u044c\u043d\u044b\u0439","regionID":"20"},{"id":"30","name":"\u041a\u0430\u043c\u0435\u0448\u043a\u043e\u0432\u043e","regionID":"20"},{"id":"28","name":"\u041a\u0430\u0440\u0430\u0431\u0430\u043d\u043e\u0432\u043e","regionID":"20"},{"id":"27","name":"\u041a\u0438\u0440\u0436\u0430\u0447","regionID":"20"},{"id":"26","name":"\u041a\u043e\u0432\u0440\u043e\u0432","regionID":"20"},{"id":"25","name":"\u041a\u043e\u043b\u044c\u0447\u0443\u0433\u0438\u043d\u043e","regionID":"20"},{"id":"24","name":"\u041a\u043e\u0441\u0442\u0435\u0440\u0451\u0432\u043e","regionID":"20"},{"id":"23","name":"\u041a\u0443\u0440\u043b\u043e\u0432\u043e","regionID":"20"},{"id":"22","name":"\u041b\u0430\u043a\u0438\u043d\u0441\u043a","regionID":"20"},{"id":"21","name":"\u041c\u0435\u043b\u0435\u043d\u043a\u0438","regionID":"20"},{"id":"2","name":"\u041c\u0443\u0440\u043e\u043c","regionID":"20"},{"id":"1","name":"\u041f\u0435\u0442\u0443\u0448\u043a\u0438","regionID":"20"},{"id":"40","name":"\u041f\u043e\u043a\u0440\u043e\u0432","regionID":"20"},{"id":"41","name":"\u0420\u0430\u0434\u0443\u0436\u043d\u044b\u0439","regionID":"20"},{"id":"42","name":"\u0421\u043e\u0431\u0438\u043d\u043a\u0430","regionID":"20"},{"id":"43","name":"\u0421\u0442\u0440\u0443\u043d\u0438\u043d\u043e","regionID":"20"},{"id":"44","name":"\u0421\u0443\u0434\u043e\u0433\u0434\u0430","regionID":"20"},{"id":"45","name":"\u0421\u0443\u0437\u0434\u0430\u043b\u044c","regionID":"20"},{"id":"46","name":"\u042e\u0440\u044c\u0435\u0432-\u041f\u043e\u043b\u044c\u0441\u043a\u0438\u0439","regionID":"20"}];
 console.log(organizations);
 
 function onRegionChange(ctrl) {
@@ -480,13 +481,13 @@ function frontendLogout() {
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/i18n/ru.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.min.js"></script>
 		
-		<script src="http://vhost.dlinkddns.com:81/public/common.js"></script>
+		<script src="http://178.215.86.165:81/public/common.js"></script>
 		<!-- для работы с модальными окнами  -->
-		<script type="text/javascript" src="http://vhost.dlinkddns.com:81/public/modal.js"></script>
-		<script type="text/javascript" src="http://vhost.dlinkddns.com:82/public/common-client.js"></script>
-		<script src="http://vhost.dlinkddns.com:81/public/templates/common_templates.js"></script>
-		<script src="http://vhost.dlinkddns.com:81/public/templates/scroller.js"></script>
-		<script src="http://vhost.dlinkddns.com:81/public/templates/entity.js"></script>
+		<script type="text/javascript" src="http://178.215.86.165:81/public/modal.js"></script>
+		<script type="text/javascript" src="http://178.215.86.165:82/public/common-client.js"></script>
+		<script src="http://178.215.86.165:81/public/templates/common_templates.js"></script>
+		<script src="http://178.215.86.165:81/public/templates/scroller.js"></script>
+		<script src="http://178.215.86.165:81/public/templates/entity.js"></script>
 		<script id="entity_template" type="text/x-jsrender">
 <span></span>
 <!--<br>templates\form_template-->
@@ -507,8 +508,8 @@ function frontendLogout() {
 			{{if descriptor.fields ~fields=~utilities.objectToArray(descriptor.fields) ~descriptor=descriptor}}
 				{{for ~fields}}
 					<div class="form-group" name="field_{{:id}}">
-						<label for="field_{{:id}}_value" class="col-sm-2 control-label">{{:name}}</label>
-						<div class="col-sm-8">
+						<label for="field_{{:id}}_value" class="col-sm-4 col-md-3 col-lg-offset-0 col-lg-3 control-label">{{:name}}</label>
+						<div class="col-sm-8 col-md-8 col-lg-8">
 							{{if type == "label"}}
 								{{include tmpl = ~descriptor.actionName + "_entity_field_label" /}}
 							{{else type == "text"}}
@@ -1643,10 +1644,10 @@ function apply_filter(container_id) {
 	}
 	// TODO. Доп. фильтры не используются с клиента. Надо удалить
 	// доп. фильтры
-	if(data.add_filter) {
+	/*if(data.add_filter) {
 		rq.add_filter = {};
 		for (var key in data.add_filter) rq.add_filter[key] = data.add_filter[key];
-	}
+	}*/
 	// исключение айдишников
 	if(data.filter_values.exclude_ids) {
 		rq.exclude_ids = data.filter_values.exclude_ids;

@@ -30,16 +30,15 @@
   array (
     0 => 'id',
     1 => 'password',
-    2 => 'phone',
-    3 => 'points',
-    4 => 'user_role_id',
-    5 => 'active',
+    2 => 'points',
+    3 => 'user_role_id',
+    4 => 'active',
   ),
   4 => 
   array (
     'id' => 0,
     'password' => 5,
-    'phone' => 5,
+    'phone' => 2,
     'email' => 5,
     'name' => 5,
     'points' => 0,
@@ -75,6 +74,7 @@
   ),
   12 => 
   array (
+    'phone' => NULL,
     'email' => NULL,
     'name' => NULL,
     'points' => '0',

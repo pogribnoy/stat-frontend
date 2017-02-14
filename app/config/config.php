@@ -1,7 +1,7 @@
 ﻿<?php
 use Phalcon\Config;
 
-$config_array = array(
+$config = new Config(array(
     "database" => array(
 		"adapter" => "Mysql",
 		"host" => "localhost",
@@ -12,18 +12,19 @@ $config_array = array(
     ),
 	"application" => array(
 		"module" => "frontend",
-		"host" => "vhost.dlinkddns.com:82",
-		"commonHost" => "http://vhost.dlinkddns.com:81",
+		"host" => "178.215.86.165:82",
+		"commonHost" => "http://178.215.86.165:81",
 		"commonControllersDir" => "../stat-backend/app/common/controllers/",
 		"commonPluginsDir" => "../stat-backend/app/common/plugins/",
 		"commonLibraryDir" => "../stat-backend/app/common/library/",
 		"commonModelsDir" => "../stat-backend/app/common/models/",
 		"commonTemplatesDir" => "../stat-backend/app/views/templates/",
-		"commonUpploadURL" => "http://vhost.dlinkddns.com:81/public/",
+		"commonUpploadURL" => "http://178.215.86.165:81/public/",
 		"noImage" => "no_image.jpg",
-		"cacheACL" => 1,
+		"cacheACL" => 1, // кешировать ACL из БД
 		"tablePageSizes" => "[30,50,100]", // Ограничение количества строк для таблиц
 		"tableMaxPageSize" => "200", // Максимальное количество строк для таблиц
+		"sessionTimeout" => "600", // Время жизни сессии в минутах
 		
 		"controllersDir" => "app/controllers/",
 		"viewsDir" => "app/views/",
@@ -31,5 +32,4 @@ $config_array = array(
 		"partialsDir" => "app/views/partials/",
 		"templatesDir" => "app/views/templates/",
 	)
-);
-$config = new Config($config_array);
+));

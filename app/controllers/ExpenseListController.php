@@ -11,12 +11,12 @@ class ExpenseListController extends ControllerList {
 	}
 
 	public function indexAction() {
-		parent::indexAction();
+		return parent::indexAction();
 		// переопределяем название
 		//$this->view->setVar("page_header", $this->t->_('text_'.$this->controllerName.'_title'));
 		//str_replace("$expenseType", isset($this->filter_values['expense_type_id']) ? $this->filter_value['expense_type_id'] : '', $phql);
 		
-		$totalSum = Expense::sum(["column" => "amount"]);
+		/*$totalSum = Expense::sum(["column" => "amount"]);
 		$expenseTypesRows = ExpenseType::find();
 		$expenseTypes = array();
 		foreach ($expenseTypesRows as $row) {
@@ -31,9 +31,19 @@ class ExpenseListController extends ControllerList {
 			];
 			//$this->logger->log('sum: ' . json_encode($expenseTypes));
 			$expenseTypes[$row->id]['prcnt'] = $expenseTypes[$row->id]['sum']/$totalSum*100;
-		}
+		}*/
 		
-		$this->view->setVar("expenseTypes", $expenseTypes);
+		/*$this->createDescriptor();
+		
+		if($this->request->isAjax()) {
+			
+			return json_encode($this->descriptor);
+		}
+		else {
+			// передаем в представление имеющиеся данные
+			$this->view->setVar("expenseTypes", $expenseTypes);
+		}*/
+		
 	}
 	
 	/* 
@@ -137,6 +147,8 @@ class ExpenseListController extends ControllerList {
 			'target_date' => array(
 				'id' => 'target_date',
 				'name' => $this->controller->t->_("text_expenselist_target_date"),
+				'filter' => 'text',
+				'filter_value' => isset($this->filter_values['target_date']) ? $this->filter_values['target_date'] : '',
 				'hideble' => 1,
 				'nullSubstitute' => '-',
 			),

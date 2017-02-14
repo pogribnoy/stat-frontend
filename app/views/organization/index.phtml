@@ -22,30 +22,89 @@
 		</div>
 	</div>
 </div>
-<div class="row-fluid"><p></p></div>
-<div class="row-fluid">
+<div class="row-fluid"><div class="col-lg-12"><p></p></div></div>
+<div class="row-fluid"><div class="col-lg-12">
 	<button id="showExpenses" type="button" class="btn btn-primary" onclick="document.location = '/expenselist?filter_organization_id=<?php echo $org['id']['value']; ?>'">Перейти к расходам</button>
 	<button id="organizationRequest" type="button" class="btn btn-default" onclick="organizationRequest(<?php echo $org["id"]["value"]; ?>);">Задать вопрос</button>
-</div>
-<div class="row-fliud">
+</div></div>
+
+<?php $select = '<select id="filter_year" onchange="onYearChange(this);">'; 
+	$count = count($expenses["years"]); 
+	for($i=0; $i<$count; $i++) { 
+		$select .= '<option value="' . $expenses["years"][$i] . '"' . (($expenses["years"][$i] == $expenses["year"]) ? ' selected="selected"' : '') . '>' . $expenses["years"][$i] . '</option>'; 
+	} 
+	$select .= '</select>'; 
+?>
+
+<div class="row-fliud"><div class="col-lg-12 text-center"><h3><?php echo str_replace("{year}", $select, $controller->t->_("text_organization_chart_title")); ?></h3></div></div>
+
+<div class="row-fliud"><div class="col-lg-12">
 	<!-- Chart -->
 	<div id="myPieChart" style="width: 100%; height: 728px;"/>
-</div>
+</div></div>
+
+<?php //var_dump($expenses["expenseTypes"]); ?>
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 <script type="text/javascript"><!--
 
+function onYearChange(ctrl) {
+	year = ctrl.value;
+	var url = '/<?php echo $controllerName; ?>/filter?id=<?php echo $org["id"]["value"]; ?>&filter_year=' + year;
+	console.log(url);
+	$.ajax({
+		url: url,
+		dataType: 'json',
+		//dataType: 'html',
+		method: 'get',
+		beforeSend: function() {
+				// показываем прогрессбар
+		},
+		complete: function() {
+			// скрываем прогрессбар
+		},			
+		success: (function(json) {
+			if(!handleAjaxError(json.error)) {
+				// используется замкание и bind, в свойстве this хранится container скроллера, как контекст
+				console.log(json);
+				descriptor.rows = [];
+				if(json.totalSum>0){
+					for (var key in json.expenseTypes) {
+						type = json.expenseTypes[key];
+						descriptor.rows.push([type.name, Number(type.sum), Number(type.prcnt), parseInt(key)]);
+					}
+					//chart.clearChart();
+					//google.charts.load('current', {packages: ['corechart']});
+					drawChart();
+				}
+				else alert("Нет данных");
+				
+			}
+		}),
+		error: function(xhr, ajaxOptions, thrownError) {
+			console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			handleAjaxError({
+				messages: [{
+					title: 'Ошибка обмена данными',
+					msg: 'Ошибка обработки запроса на стороне сервера. Обратитесь в службу поддержки',
+				}],
+			});
+		}
+	});
+}
+
+
 var descriptor = {
 	columns: [
 		{type: 'string', value: 'Тип расхода'},
 		{type: 'number', value: 'Сумма, тыс. р.'},
-		{type: 'number', value: 'Средний расход, тыс. р.'},
+		{type: 'number', value: 'Доля типа расхода от общей суммы расходов, %'},
 		{type: 'number', value: 'Идентификатор'}
 	],
 	rows: [
-		<?php if(isset($expenseTypes)) { 
-			foreach($expenseTypes as $id => $type) { ?>
+		<?php if(isset($expenses["expenseTypes"])) { 
+			foreach($expenses["expenseTypes"] as $id => $type) { ?>
 				['<?php echo $type['name']; ?>', <?php echo $type['sum']; ?>, <?php echo $type['prcnt']; ?>, <?php echo $id; ?>],
 			<?php } ?>
 		<?php } ?>
@@ -53,8 +112,11 @@ var descriptor = {
 }
 google.charts.load('current', {packages: ['corechart']});
 google.charts.setOnLoadCallback(drawChart);
+var chart = null;
+var year = <?php echo $expenses["year"]; ?>
 
 function drawChart() {
+	document.getElementById('filter_year').value = year;
 	if(descriptor.rows.length>0) {
 		// Define the chart to be drawn.
 		var data = new google.visualization.DataTable();
@@ -69,15 +131,23 @@ function drawChart() {
 			//pattern: '###############',
 		});
 		formatter.format(data, 1);
+		formatter = new google.visualization.NumberFormat({
+			fractionDigits: 2,
+			groupingSymbol: ' ',
+			suffix: ' %',
+			//pattern: '###############',
+		});
 		formatter.format(data, 2);
 		
 		var options = {
-			title: '<?php echo str_replace("{year}", $year, $controller->t->_("text_organization_chart_title")); ?>',
 			//pieHole: 0.4 // You can't combine the pieHole and is3D options; if you do, pieHole will be ignored.
 			//is3D: true,
+			//backgroundColor: 'blue',
+			chartArea: {top:20},
 		};
 		
-		var chart = new google.visualization.PieChart(document.getElementById('myPieChart'));
+		//if(chart!=null) chart.clearChart();
+		chart = new google.visualization.PieChart(document.getElementById('myPieChart'));
 		// The select handler. Call the chart's getSelection() method
 		function selectHandler(e) {
 			var selectedItem = chart.getSelection()[0];
@@ -87,7 +157,7 @@ function drawChart() {
 				var value = row[0] + ' = ' + row[1];
 				//alert('Выбрано: ' + value);
 				console.log('Выбрано: ' + value);
-				var url = '/expenselist?filter_expense_type_id=' + row[3] + '&' + 'filter_organization_id=<?php echo $org['id']['value']; ?>';
+				var url = '/expenselist?filter_expense_type_id=' + row[3] + '&' + 'filter_organization_id=<?php echo $org['id']['value']; ?>&filter_target_date=' + year;
 				document.location = url;
 				
 				console.log('document.location = ' + url);

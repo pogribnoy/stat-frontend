@@ -105,7 +105,7 @@ $di->set('modelsMetadata', function() {
 });
 
 $di->set('viewCache', function() {
-	// Создание frontend для выходных данных. Кэшируем файлы на 3600 секунд
+	// Создание frontend для выходных данных. Кэшируем файлы на 10 секунд
 	$frontCache = new Phalcon\Cache\Frontend\Output([
 		"lifetime" => 10,
 	]);
@@ -118,7 +118,7 @@ $di->set('viewCache', function() {
 });
 
 $di->set('dataCache', function() {
-	// Создание frontend для выходных данных. Кэшируем файлы на 3600 секунд
+	// Создание frontend для выходных данных. Кэшируем файлы на 10 секунд
 	$frontCache = new Phalcon\Cache\Frontend\Data([
 		"lifetime" => 10,
 	]);
