@@ -266,7 +266,7 @@ class OrganizationController extends ControllerBase {
 		//$year = (int)$curD->format("Y") - 1;
 		$periodS = DateTime::createFromFormat('Y-m-d', $year . '-01-01');
 		$periodStart = $periodS->format("Y-m-d");
-		$periodE = DateTime::createFromFormat('Y-m-d', ($year + 1) . '-01-01'); // +1 - если оставить, то будет текущий год, если нет, то предыдущий
+		$periodE = DateTime::createFromFormat('Y-m-d', ($year + 1) . '-01-01');
 		$periodEnd = $periodE->format("Y-m-d");
 		//$this->logger->log('periodStart = ' . $periodStart);
 		//$this->logger->log('periodEnd = ' . $periodEnd);
