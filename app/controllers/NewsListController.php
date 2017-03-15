@@ -1,5 +1,5 @@
 <?php
-class NewsListController extends ControllerBase {
+class NewslistController extends ControllerBase {
 	
 	public function initialize() {
 		parent::initialize();

@@ -1,5 +1,5 @@
 <?php
-class ExpenseTypeListController extends ControllerBase {
+class ExpensetypelistController extends ControllerBase {
 	public function initialize() {
 		parent::initialize();
 	}

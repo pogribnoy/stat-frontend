@@ -1,7 +1,7 @@
 <?php
-class ExpenseListController extends ControllerList {
-	public $entityName = 'expense';
-	public $controllerName = "expenselist";
+class ExpenselistController extends ControllerList {
+	public $entityName = 'Expense';
+	public $controllerName = "Expenselist";
 	public $notCollapsible = 1;
 	
 	public function initialize() {

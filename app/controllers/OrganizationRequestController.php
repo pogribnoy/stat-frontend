@@ -1,6 +1,6 @@
 <?php
-class OrganizationRequestController extends ControllerEntity {
-	public $entityName  = 'organizationrequest';
+class OrganizationrequestController extends ControllerEntity {
+	public $entityName  = 'Organizationrequest';
 	public $tableName  = 'organization_request';
 	
 	public function initialize() {
@@ -24,7 +24,7 @@ class OrganizationRequestController extends ControllerEntity {
 				'name' => $this->t->_("text_entity_property_recipient"),
 				'type' => 'label',
 				'style' => 'id', //name
-				'linkEntityName' => 'organization',
+				'linkEntityName' => 'Organization',
 				'linkEntityField' => 'name',
 				'newEntityValue' => null,
 				'newEntityID' => 'true',
