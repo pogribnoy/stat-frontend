@@ -1,5 +1,9 @@
-app/logs/*.log
+#app/logs/*.log
+app/cache/metadata/*
+app/cache/views/*
 app/cache/*
+!app/cache/metadata/.gitkeep
+!app/cache/views/.gitkeep
 .DS_Store*
 ehthumbs.db
 Icon?
@@ -12,5 +16,4 @@ Thumbs.db
 *.sublime-workspace
 .idea/
 .gitignore
-*.log
 *.log
