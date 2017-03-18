@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 use Phalcon\Config;
 
 $config = new Config(array(
@@ -12,14 +12,15 @@ $config = new Config(array(
     ),
 	"application" => array(
 		"module" => "frontend",
-		"host" => "178.215.86.165:82",
+		"host" => "178.215.86.165",
 		"commonHost" => "http://178.215.86.165:81",
 		"commonControllersDir" => "../stat-backend/app/common/controllers/",
 		"commonPluginsDir" => "../stat-backend/app/common/plugins/",
 		"commonLibraryDir" => "../stat-backend/app/common/library/",
 		"commonModelsDir" => "../stat-backend/app/common/models/",
 		"commonTemplatesDir" => "../stat-backend/app/views/templates/",
-		"commonUpploadURL" => "http://178.215.86.165:81/public/",
+		//"commonUpploadURL" => "http://178.215.86.165:81/public/",
+		"filesUploadDirectory" => "upload/files/", //Каталог, в который должны загружаться файлы сущностей. В конце обязательно указание символа "/";
 		"noImage" => "no_image.jpg",
 		"cacheACL" => 1, // кешировать ACL из БД
 		"tablePageSizes" => "[30,50,100]", // Ограничение количества строк для таблиц
