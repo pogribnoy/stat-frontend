@@ -12,8 +12,8 @@ $config = new Config(array(
     ),
 	"application" => array(
 		"module" => "frontend",
-		"host" => "178.215.86.165",
-		"commonHost" => "http://178.215.86.165:81",
+		"host" => "rgor.ddns.net",
+		"commonHost" => "http://rgor-b.ddns.net",
 		"commonControllersDir" => "../stat-backend/app/common/controllers/",
 		"commonPluginsDir" => "../stat-backend/app/common/plugins/",
 		"commonLibraryDir" => "../stat-backend/app/common/library/",
