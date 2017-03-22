@@ -174,7 +174,7 @@ class OrganizationController extends ControllerBase {
 					$file_rows = $row->getFile();
 					if($file_rows && count($file_rows)>0) {
 						//$this->logger->log(json_encode($file_rows));
-						$org["img"]["href"] = $this->config->application->commonUpploadURL . $file_rows[0]->directory . $file_rows[0]->name;			
+						$org["img"]["href"] = $this->config->application->commonHost . "/" . $file_rows[0]->directory . $file_rows[0]->name;			
 					}
 					
 					// данные о регионе

@@ -44,13 +44,13 @@
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/i18n/ru.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.min.js"></script>
 		
-		<script src="<?php echo $controller->config->application->commonHost; ?>/public/common.js"></script>
+		<script src="<?php echo $controller->config->application->commonHost; ?>/common.js"></script>
 		<!-- для работы с модальными окнами  -->
-		<script type="text/javascript" src="<?php echo $controller->config->application->commonHost; ?>/public/modal.js"></script>
-		<script type="text/javascript" src="http://<?php echo $controller->config->application->host; ?>/public/common-client.js"></script>
-		<script src="<?php echo $controller->config->application->commonHost; ?>/public/templates/common_templates.js"></script>
-		<script src="<?php echo $controller->config->application->commonHost; ?>/public/templates/scroller.js"></script>
-		<script src="<?php echo $controller->config->application->commonHost; ?>/public/templates/entity.js"></script>
+		<script type="text/javascript" src="<?php echo $controller->config->application->commonHost; ?>/modal.js"></script>
+		<script type="text/javascript" src="http://<?php echo $controller->config->application->host; ?>/common-client.js"></script>
+		<script src="<?php echo $controller->config->application->commonHost; ?>/templates/common_templates.js"></script>
+		<script src="<?php echo $controller->config->application->commonHost; ?>/templates/scroller.js"></script>
+		<script src="<?php echo $controller->config->application->commonHost; ?>/templates/entity.js"></script>
 		<?php 
 			$this->partial(APP_PATH . $this->config->application->commonTemplatesDir . "form_template");
 			$this->partial(APP_PATH . $this->config->application->commonTemplatesDir . "scroller_template"); 

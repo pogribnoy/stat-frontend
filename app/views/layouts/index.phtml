@@ -4,7 +4,15 @@
 <?php //var_dump( $dbg); ?>
 
 <div class="row-fluid">
-	<h1 class="page-header"><?php if(isset($page_header)) echo $page_header; ?></h1>
+	<?php if(isset($page_header)) {
+		if(isset($descriptor) && isset($descriptor["controllerName"]) && $descriptor["controllerName"] == "expenselist" && isset($descriptor["filter_values"]) && isset($descriptor["filter_values"]["organization_id"])) {  ?>
+			<a href="<?php echo "/" . $descriptor["controllerName"] . "?id=" . $descriptor["filter_values"]["organization_id"]; ?>"><h1 class="page-header"><?php echo $page_header; ?></h1></a>
+		<?php }
+		else { ?>
+			<h1 class="page-header"><?php echo $page_header; ?></h1>
+		<?php } ?>
+	<?php } ?>
+
 </div><!-- /.row-fluid -->
 	
 <div class="row-fluid">
