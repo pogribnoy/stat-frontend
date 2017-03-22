@@ -6,7 +6,7 @@
 <div class="row-fluid">
 	<?php if(isset($page_header)) {
 		if(isset($descriptor) && isset($descriptor["controllerName"]) && $descriptor["controllerName"] == "expenselist" && isset($descriptor["filter_values"]) && isset($descriptor["filter_values"]["organization_id"])) {  ?>
-			<a href="<?php echo "/" . $descriptor["controllerName"] . "?id=" . $descriptor["filter_values"]["organization_id"]; ?>"><h1 class="page-header"><?php echo $page_header; ?></h1></a>
+			<a href="<?php echo "/organization?id=" . $descriptor["filter_values"]["organization_id"]; ?>"><h1 class="page-header"><?php echo $page_header; ?></h1></a>
 		<?php }
 		else { ?>
 			<h1 class="page-header"><?php echo $page_header; ?></h1>
