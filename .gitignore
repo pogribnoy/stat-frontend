@@ -17,3 +17,4 @@ Thumbs.db
 .idea/
 .gitignore
 *.log
+app/config/config.php
