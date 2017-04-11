@@ -12,7 +12,7 @@ function organizationRequest(id) {
 	
 		// запрашиваем с сервера пустую сущность
 	$.ajax({
-		url: '/organizationrequest/edit',
+		url: '/organizationrequest/edit?filter_organization_id='+id,
 		dataType: 'json',
 		method: 'get',
 		beforeSend: function() {
@@ -53,3 +53,7 @@ function organizationRequest(id) {
 		}
 	});
 }
+
+$(window).bind("pageshow", function() {
+	
+});

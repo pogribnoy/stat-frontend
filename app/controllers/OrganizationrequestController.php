@@ -1,6 +1,6 @@
 <?php
 class OrganizationrequestController extends ControllerEntity {
-	public $entityName  = 'Organizationrequest';
+	public $entityName  = 'OrganizationRequest';
 	public $tableName  = 'organization_request';
 	
 	public function initialize() {
@@ -26,8 +26,19 @@ class OrganizationrequestController extends ControllerEntity {
 				'style' => 'id', //name
 				'linkEntityName' => 'Organization',
 				'linkEntityField' => 'name',
-				'newEntityValue' => null,
-				'newEntityID' => 'true',
+				'required' => 2,
+				/*'newEntityValue' => function(){
+					if(isset($this->filter_values["organization_id"])) {
+						$org = Organization::find([
+							"conditions" => "id=?1",
+							"bind" => [1 => $this->filter_values["organization_id"]]
+						]);
+						if($org) return $org->id;
+						else return null;
+					}
+					return null;
+				},*/
+				'newEntityID' => true,	// взять сущность по filter_organization_id
 			),
 			'topic' => array(
 				'id' => 'topic',
@@ -35,21 +46,23 @@ class OrganizationrequestController extends ControllerEntity {
 				'type' => 'select',
 				'style' => 'id', //name
 				'linkEntityName' => 'OrganizationRequestTopic',
-				'required' => 1,
-				'newEntityValue' => null,
+				'required' => 2,
+				//'newEntityValue' => null,
 			), 
 			'status' => array(
 				'id' => 'status',
 				'name' => $this->t->_("text_entity_property_status"),
 				'type' => 'label',
-				'newEntityID' => 1,
-				'newEntityValue' => $this->t->_("status_new"),
+				'linkEntityName' => 'RequestStatus',
+				'linkEntityField' => 'name_code',
+				'newEntityID' => 0*0,
+				//'newEntityValue' => $this->t->_("status_new"),
 			), 
 			'request' => array(
 				'id' => 'request',
 				'name' => $this->t->_("text_organizationrequest_request"),
 				'type' => 'textarea',
-				'required' => 1,
+				'required' => 2,
 				'newEntityValue' => null,
 			), 
 			'response' => array(
@@ -62,14 +75,14 @@ class OrganizationrequestController extends ControllerEntity {
 				'id' => 'response_email',
 				'name' => $this->t->_("text_organizationrequest_response_email"),
 				'type' => 'text',
-				'required' => 1,
+				'required' => 2,
 				'newEntityValue' => null,
 			), 
 			'created_at' => array(
 				'id' => 'created_at',
 				'name' => $this->t->_("text_entity_property_created_at"),
 				'type' => 'label',
-				'required' => 1,
+				'required' => 0,
 				'newEntityValue' => null,
 			),
 		];

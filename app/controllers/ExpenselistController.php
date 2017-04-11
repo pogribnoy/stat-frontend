@@ -137,13 +137,6 @@ class ExpenselistController extends ControllerList {
 				'filter_value' => isset($this->filter_values['amount']) ? $this->filter_values['amount'] : '',
 				"sortable" => "DESC",
 			),
-			/*'date' => array(
-				'id' => 'date',
-				'name' => $this->controller->t->_("text_expenselist_date"),
-				'filter' => 'text',
-				'filter_value' => isset($this->filter_values['date']) ? $this->filter_values['date'] : '',
-				"sortable" => "DESC",
-			),*/
 			'target_date' => array(
 				'id' => 'target_date',
 				'name' => $this->controller->t->_("text_expenselist_target_date"),
@@ -184,17 +177,6 @@ class ExpenselistController extends ControllerList {
 	* Переопределяемый метод.
 	*/
 	public function fillColumnsWithLists() {
-		// регионы для фильтрации
-		/*$regions_rows = Region::find();
-		$regions = array();
-		foreach ($regions_rows as $row) {
-			// наполняем массив
-			$regions[] = array(
-				'id' => $row->id,
-				"name" => $row->name
-			);
-		}
-		$this->columns['organization_region']['filter_values'] = $regions;*/
 		
 		// типы расходов для фильтрации
 		$expense_type_rows = ExpenseType::find();
@@ -271,10 +253,6 @@ class ExpenselistController extends ControllerList {
 					'id' => 'id',
 					'value' => $row->expense->id,
 				),
-				/*"organization_region" => array(
-					'value_id' => $row->organization_region_id ? $row->organization_region_id : '',
-					'value' => $row->organization_region_name ? $row->organization_region_name : '',
-				),*/
 				"settlement" => array(
 					'id' => 'settlement',
 					//'value_id' => $row->expense->organization_id ? $row->expense->organization_id : '',
@@ -305,10 +283,6 @@ class ExpenselistController extends ControllerList {
 					//'value' => $row->expense->amount != null ? number_format($row->expense->amount / 100, 2, '.', ' ') : '',
 					'value' => $row->expense->amount ? $row->expense->amount : '',
 				),
-				/*"date" => array(
-					'id' => 'date',
-					'value' => $row->expense->date ? $row->expense->date : '',
-				),*/
 				"target_date" => array(
 					'id' => 'target_date',
 					'value1' => $row->expense->target_date_from ? $row->expense->target_date_from : '',

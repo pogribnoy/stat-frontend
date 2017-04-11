@@ -44,26 +44,60 @@ var regions = <?php echo json_encode($regions); ?>;
 var organizations = <?php echo json_encode($organizations); ?>;
 console.log(organizations);
 
+// код необходим для нормальной работы форм с кнопками "Назад" в браузере
+if ('onpageshow' in window) {
+    window.addEventListener('pageshow', PageShowHandler, false);
+}
+
+function PageShowHandler() {
+	var regCtrl = document.getElementById('regionSelect');
+	var regionID = regCtrl.value;
+	var orgCtrl = document.getElementById('organizationSelect');
+	var organizationID = orgCtrl.value;
+	// если регион выбран
+	if(regionID != "*") {
+		// актуализируем организации
+		onRegionChange(regCtrl);
+	}
+	// если до актуализации была выбрана организация
+	if(organizationID != "*") {
+		// то возвращаем ее в качестве выбранной
+		orgCtrl.value = organizationID;
+		// делаем доступной кнопку перехода к расходам
+		onOrganizationChange(orgCtrl);
+	}
+}
+
 function onRegionChange(ctrl) {
-	var regID = ctrl.value;
-	
-	var selectOrgs = $("#organizationSelect").empty();
-	var optionsHTML = '<option value="*" selected="selected"></option>';
-	if(regID == '*') {
+	var regionID = ctrl.value;
+	var organizationID = document.getElementById('organizationSelect').value;
+	//var selectOrgs = $("#organizationSelect").empty();
+	var selectOrgs = document.getElementById("organizationSelect");
+	selectOrgs.innerHTML = "";
+	var optionsHTML;
+	if(organizationID == "*") optionsHTML = '<option value="*" selected="selected"></option>';
+	else optionsHTML = '<option value="*"></option>';
+	if(regionID == '*') {
 		for (var id in organizations) {
 			var org = organizations[id];
-			optionsHTML += '<option value="' + org.id + '">' + org.name + ' (' + regions[org['regionID']] + ')</option>';
+			if(organizationID == org.id) optionsHTML += '<option value="' + org.id + '" selected="selected">' + org.name + ' (' + regions[org['regionID']] + ')</option>';
+			else optionsHTML += '<option value="' + org.id + '">' + org.name + ' (' + regions[org['regionID']] + ')</option>';
 		}
 	}
 	else {
 		for (var id in organizations) {
 			var org = organizations[id];
-			if(org.regionID == regID) optionsHTML += '<option value="' + org.id + '">' + org.name + ' (' + regions[org['regionID']] + ')</option>';
+			if(org.regionID == regionID) {
+				if(organizationID == org.id) optionsHTML += '<option value="' + org.id + '" selected="selected">' + org.name + ' (' + regions[org['regionID']] + ')</option>';
+				else optionsHTML += '<option value="' + org.id + '">' + org.name + ' (' + regions[org['regionID']] + ')</option>';
+			}
 		}
 	}
-	selectOrgs.append(optionsHTML);
+	//selectOrgs.append(optionsHTML);
+	selectOrgs.innerHTML = optionsHTML;
 	//selectOrgs.select2();
 	//selectOrgs.on("select2:select", onOrganizationSelect);
+	onOrganizationChange(document.getElementById('organizationSelect'));
 }
 
 function onOrganizationChange(ctrl) {

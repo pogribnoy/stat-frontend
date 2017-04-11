@@ -52,6 +52,13 @@ $messages = array(
 
 // Entity. News
 
+// Entity. Organization request
+"text_organizationrequest_title" => "Задайте вопрос", //entity|page title
+"text_organizationrequest_topic" => "Тема",
+"text_organizationrequest_request" => "Вопрос",
+"text_organizationrequest_response" => "Ответ",
+"text_organizationrequest_response_email" => "Email для ответа",
+
 // Scroller. Expense list
 "text_expenselist_title"				=> "Расходы",
 "text_expenselist_expense_type"			=> "Тип расходов",
