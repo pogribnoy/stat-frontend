@@ -55,7 +55,7 @@ class OrganizationrequestController extends ControllerEntity {
 				'type' => 'label',
 				'linkEntityName' => 'RequestStatus',
 				'linkEntityField' => 'name_code',
-				'newEntityID' => 0*0,
+				'newEntityID' => "1",
 				//'newEntityValue' => $this->t->_("status_new"),
 			), 
 			'request' => array(

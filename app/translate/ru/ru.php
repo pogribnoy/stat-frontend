@@ -53,11 +53,17 @@ $messages = array(
 // Entity. News
 
 // Entity. Organization request
-"text_organizationrequest_title" => "Задайте вопрос", //entity|page title
-"text_organizationrequest_topic" => "Тема",
-"text_organizationrequest_request" => "Вопрос",
-"text_organizationrequest_response" => "Ответ",
-"text_organizationrequest_response_email" => "Email для ответа",
+"text_organizationrequest_title"			=> "Задайте вопрос", //entity|page title
+"text_user_new_entity_title"				=> "Новый вопрос", // new entity form|page title
+"text_organizationrequest_topic"			=> "Тема",
+"text_organizationrequest_request"			=> "Вопрос",
+"text_organizationrequest_response"			=> "Ответ",
+"text_organizationrequest_response_email"	=> "Email для ответа",
+
+"code_status_new"			=> "Новый",
+"code_status_processed"		=> "Готов",
+"code_status_in_progress"	=> "В обработке",
+"code_status_declined"		=> "Отказан",
 
 // Scroller. Expense list
 "text_expenselist_title"				=> "Расходы",
