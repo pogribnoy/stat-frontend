@@ -21,8 +21,9 @@ $messages = array(
 "text_search"    				=> "Поиск",
 "text_active_short"    	=> "(акт.)",
 "text_nonactive_short"  => " (неакт.)",
-"text_site_full_name"		=> "Интернет портал общедоступной информации о расходах муниципальных образований «Расходы города»",
-"text_site_short_name"		=> "Расходы города",
+"text_site_full_name"	=> "Интернет портал общедоступной информации о расходах муниципальных образований «Расходы города»",
+"text_site_short_name"	=> "Расходы города",
+"text_site_version"		=> "Версия",
 
 // Scrollers and pages
 // Page. Index
@@ -54,16 +55,18 @@ $messages = array(
 
 // Entity. Organization request
 "text_organizationrequest_title"			=> "Задайте вопрос", //entity|page title
-"text_user_new_entity_title"				=> "Новый вопрос", // new entity form|page title
+"text_organizationrequest_new_entity_title"				=> "Новый вопрос", // new entity form|page title
+"text_organizationrequest_expense"			=> "Расход",
 "text_organizationrequest_topic"			=> "Тема",
 "text_organizationrequest_request"			=> "Вопрос",
 "text_organizationrequest_response"			=> "Ответ",
 "text_organizationrequest_response_email"	=> "Email для ответа",
 
-"code_status_new"			=> "Новый",
-"code_status_processed"		=> "Готов",
-"code_status_in_progress"	=> "В обработке",
 "code_status_declined"		=> "Отказан",
+"code_status_done"			=> "Готов",
+"code_status_in_progress"	=> "В обработке",
+"code_status_new"			=> "Новый",
+"code_status_processed"		=> "Обработан",
 
 // Scroller. Expense list
 "text_expenselist_title"				=> "Расходы",
@@ -110,6 +113,7 @@ $messages = array(
 "text_entity_property_name"				=> "Наименование",
 "text_entity_property_password"			=> "Пароль",
 "text_entity_property_phone"			=> "Телефон",
+"text_entity_property_recaptcha"		=> "Проверка на человечность",
 "text_entity_property_recipient"		=> "Получатель",
 "text_entity_property_region"			=> "Регион",
 "text_entity_property_related_data"		=> "Связанные записи",
@@ -163,7 +167,40 @@ $messages = array(
 "text_no_data"	=> "Нет данных для отображения",
 "text_no_edit"	=> "Редактирование невозможно",
 
-// Error
+// Client messages
+"msg_success_title"				=> "Операция успешна",
+"msg_success_entity_saved"		=> "Запись с успешно сохранена",
+"msg_success_file_deleted"		=> 'Файл "{file_name}" удален',
+
+
+"msg_check_field_invalid_value"		=> 'Поле "%field_name%". Передано некорректное значение',
+"msg_check_field_mandatory"			=> 'Поле "%field_name%" обязательно для указания',
+"msg_check_field_min_value"			=> 'Поле "%field_name%" содержит значение меньше допустимого',
+"msg_check_field_max_value"			=> 'Поле "%field_name%" содержит значение больше допустимого',
+"msg_check_field_email_format"		=> 'Поле "%field_name%" содержит значение, не соответствущее адресу электронной почты',
+"msg_check_field_text_min"			=> 'Поле "%field_name%" содержит слишком короткое значение (должно быть не менее %field_min% символов)',
+"msg_check_field_text_max"			=> 'Поле "%field_name%" содержит слишком длинное значение (должно быть не более %field_max% символов)',
+"msg_check_field_period_1"			=> 'Поле "%field_name%". Дата "%field_name1%" обязательна для заполнения',
+"msg_check_field_period_2"			=> 'Поле "%field_name%". Дата "%field_name2%" обязательна для заполнения',
+"msg_check_field_period_any"		=> 'Поле "%field_name%". Должна быть заполнена хотя бы одна дата',
+"msg_check_field_period_full"		=> 'Поле "%field_name%". Период должен быть заполнен полностью',
+"msg_check_field_period_2lt1"		=> 'В поле "%field_name%" дата окончания периода не может быть меньше даты начала периода',
+"msg_check_field_not_found_by_id"	=> 'Поле "%field_name%". По переданому идентификатору не найдена запись в БД',
+"msg_check_field_not_in_list"		=> 'Поле "%field_name%". Передано значение не из списка',
+"msg_check_field_recaptcha"			=> 'Есть подозрение, что вы робот. Перезагрузите страницу и повторите ввод',
+
+
+"msg_error_title"						=> 'Ошибка',
+"msg_error_not_one_rows"				=> '001. Выборка данных из БД либо пуста, либо содержит более 1 записи',
+"msg_error_post_is_expected"			=> '002. Ожидается использование метода POST',
+"msg_error_no_id"						=> '003. Не получен идентификатор сущности',
+"msg_error_file_not_deleted"			=> '004. Файл "{file_name}" не удален',
+"msg_error_file_not_deleted_from_hdd"	=> '005. Файл "{file_name}" не удален из файлового хранилища',
+"msg_error_files_not_deleted"			=> '006. Удаление файлов неуспешно',
+
+
+
+
 "error_upload_1"        => "Загружаемый на сервер файл превышает параметр upload_max_filesize в php.ini!",
 "error_upload_2"        => "Загружаемый на сервер файл превышает параметр MAX_FILE_SIZE который определен в HTML форме!",
 "error_upload_3"        => "Загружаемый на сервер файл был загружен не полностью!",

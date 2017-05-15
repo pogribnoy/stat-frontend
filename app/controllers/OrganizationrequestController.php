@@ -1,7 +1,16 @@
 <?php
 class OrganizationrequestController extends ControllerEntity {
-	public $entityName  = 'OrganizationRequest';
-	public $tableName  = 'organization_request';
+	public $entityName = 'OrganizationRequest';
+	public $tableName = 'organization_request';
+	
+	public $access = [
+		"edit" => [
+			"id" => self::hiddenAccess,
+			"status" => self::hiddenAccess,
+			"response" => self::hiddenAccess,
+			"created_at" => self::hiddenAccess,
+		],
+	];
 	
 	public function initialize() {
 		parent::initialize();
@@ -22,25 +31,24 @@ class OrganizationrequestController extends ControllerEntity {
 			'organization' => array(
 				'id' => 'organization',
 				'name' => $this->t->_("text_entity_property_recipient"),
-				'type' => 'label',
+				'type' => 'link',
 				'style' => 'id', //name
 				'linkEntityName' => 'Organization',
 				'linkEntityField' => 'name',
 				'required' => 2,
-				/*'newEntityValue' => function(){
-					if(isset($this->filter_values["organization_id"])) {
-						$org = Organization::find([
-							"conditions" => "id=?1",
-							"bind" => [1 => $this->filter_values["organization_id"]]
-						]);
-						if($org) return $org->id;
-						else return null;
-					}
-					return null;
-				},*/
-				'newEntityID' => true,	// взять сущность по filter_organization_id
+				'newEntityID' => true, // взять сущность по filter_organization_id
 			),
-			'topic' => array(
+			'expense' => array(
+				'id' => 'expense',
+				'name' => $this->t->_("text_organizationrequest_expense"),
+				'type' => 'link',
+				'style' => 'id', //name
+				'linkEntityName' => 'Expense',
+				'linkEntityField' => 'name',
+				'required' => 2,
+				'newEntityID' => true, // взять сущность по filter_expense_id
+			), 
+			/*'topic' => array(
 				'id' => 'topic',
 				'name' => $this->t->_("text_organizationrequest_topic"),
 				'type' => 'select',
@@ -48,11 +56,12 @@ class OrganizationrequestController extends ControllerEntity {
 				'linkEntityName' => 'OrganizationRequestTopic',
 				'required' => 2,
 				//'newEntityValue' => null,
-			), 
+			), */
 			'status' => array(
 				'id' => 'status',
 				'name' => $this->t->_("text_entity_property_status"),
-				'type' => 'label',
+				'type' => 'link',
+				'style' => 'id', //name
 				'linkEntityName' => 'RequestStatus',
 				'linkEntityField' => 'name_code',
 				'newEntityID' => "1",
@@ -85,6 +94,13 @@ class OrganizationrequestController extends ControllerEntity {
 				'required' => 0,
 				'newEntityValue' => null,
 			),
+			'recaptcha' => array(
+				'id' => 'recaptcha',
+				'name' => $this->t->_("text_entity_property_recaptcha"),
+				'type' => 'recaptcha',
+				'required' => 2,
+				'newEntityValue' => $this->config['application']['reCaptchaPublicKey'],
+			), 
 		];
 		// наполняем поля данными
 		parent::initFields();
@@ -96,13 +112,17 @@ class OrganizationrequestController extends ControllerEntity {
 	*/
 	protected function fillModelFieldsFromSaveRq() {
 		//$this->entity->id получен ранее при select из БД или будет присвоен при создании записи в БД
-		$this->entity->organization_id = $this->filter_values['organization_id'];
-		$this->entity->user_id = $this->session->get('auth')['id'];
-		$this->entity->status_id = $this->filter_values['status_id'];
-		$this->entity->topic_id = $this->fields['topic']['value_id'];
+		$this->entity->organization_id = $this->fields['organization']['value_id'];
+		$this->entity->expense_id = $this->fields['expense']['value_id'];
+		$this->logger->log(__METHOD__ . ". organization_id = " . $this->fields['organization']['value_id']);
+		
+		$this->entity->status_id = $this->fields['status']['value_id'];
+		//$this->entity->topic_id = $this->fields['topic']['value_id'];
 		$this->entity->request = $this->fields['request']['value'];
 		$this->entity->response_email = $this->fields['response_email']['value'];
-		$this->entity->created_at = (new DateTime('now'))->format("Y-m-d H-M");
+		
+		if($this->isFieldAccessibleForUser($this->fields['created_at'])) $this->entity->created_at = (new DateTime($this->fields['request']['value']))->format("Y-m-d H:i:s");
+		else $this->entity->created_at = (new DateTime('now'))->format("Y-m-d H:i:s");
 	}
 	
 	/* 
@@ -111,7 +131,7 @@ class OrganizationrequestController extends ControllerEntity {
 	*/
 	public function getPhql() {
 		// строим запрос к БД на выборку данных
-		return "SELECT OrganizationRequest.*, User.id AS user_id, User.name AS user_name, Organization.id AS organization_id, Organization.name AS rganization_name, OrganizationRequestTopic.id AS organization_request_topic_id, OrganizationRequestTopic.name AS organization_request_topic_name FROM OrganizationRequest JOIN Organization on Organization.id=OrganizationRequest.organization_id JOIN OrganizationRequestTopic on OrganizationRequestTopic.id=OrganizationRequest.topic_id JOIN User on User.id=OrganizationRequest.user_id WHERE Expense.id = '" . $this->filter_values["id"] . "' LIMIT 1";
+		return "SELECT OrganizationRequest.*, Organization.id AS organization_id, Organization.name AS organization_name, Expense.id AS expense_id, Expense.name AS expense_name FROM OrganizationRequest JOIN Organization on Organization.id=OrganizationRequest.organization_id JOIN Expense on Expense.id=OrganizationRequest.expense_id WHERE OrganizationRequest.id = '" . $this->filter_values["id"] . "' LIMIT 1";
 	}
 	
 	/* 
@@ -123,61 +143,41 @@ class OrganizationrequestController extends ControllerEntity {
 		$this->fields["id"]["value"] = $row->id;
 		$this->fields["organization"]["value"] = $row->organization_name;
 		$this->fields["organization"]["value_id"] = $row->organization_id;
-		$this->fields["user"]["value"] = $row->user_name;
-		$this->fields["user"]["value_id"] = $row->user_id;
-		$this->fields["topic"]["value"] = $row->topic_name;
-		$this->fields["topic"]["value_id"] = $row->topic_id;
+		$this->fields["expense"]["value"] = $row->expense_name;
+		$this->fields["expense"]["value_id"] = $row->expense_id;
+		//$this->fields["topic"]["value"] = $row->topic_name;
+		//$this->fields["topic"]["value_id"] = $row->topic_id;
 		$this->fields["request"]["value"] = $row->request;
 		$this->fields["response"]["value"] = $row->response;
 		$this->fields["response_email"]["value"] = $row->response_email;
 		$this->fields["status"]["value"] = $row->status;
 		$this->fields["created_at"]["value"] = $row->created_at;
 	}
+	
+	protected function sanitizeRqFilters() {
+		parent::sanitizeRqFilters();
+		
+		if(isset($_REQUEST["filter_organization_id"])) $this->filter_values["organization_id"] = $this->filter->sanitize(urldecode($_REQUEST["filter_organization_id"]), ["trim", "int"]); 
+		if(isset($_REQUEST["filter_expense_id"])) $this->filter_values["expense_id"] = $this->filter->sanitize(urldecode($_REQUEST["filter_expense_id"]), ["trim", "int"]); 
+	}
 		
 	/* 
-	* Обновляет данные сущности после сохранения в БД (например, проставляется дата создвания записи)
+	* Обновляет данные сущности после сохранения в БД (например, проставляется дата создания записи)
 	* Переопределяемый метод.
 	*/
 	protected function updateEntityFieldsFromModelAfterSave() {
-		$this->fields["id"]["value"] = $row->expense->id;
-		$this->fields["created_at"]["value"] = $row->created_at;
+		$this->fields["id"]["value"] = $this->entity->id;
+		$this->fields["created_at"]["value"] = $this->entity->created_at;
 	}
 	
-	/* 
-	* Очищает параметры запроса
-	* Расширяемый метод.
-	*/
-	protected function sanitizeSaveRqData($rq) {
-		// id, select, link
-		if(!parent::sanitizeSaveRqData($rq)) return false;
-		// request
-		if(isset($rq->fields->request) && isset($rq->fields->request->value)) {
-			$val = $this->filter->sanitize(urldecode($rq->fields->request->value), ["trim", "string"]);
-			if($val != '') $this->fields['request']['value'] = $val;
-			else {
-				$this->error['messages'][] = [
-					'title' => "Ошибка",
-					'msg' => 'Поле "'. $this->fields['request']['name'] .'" обязательно для указания'
-				];
-				return false;
+	public function customizeFields() {
+		if(count($this->operations) > 0) {
+			foreach ($this->operations as $id => $operation) {
+				if($operation['id'] == 'save') $this->operations[$id]['name'] = $this->t->_('button_send');
+				elseif($operation['id'] == 'check') unset($this->operations[$id]);
 			}
+			$this->operations = array_values($this->operations);
 		}
-		else return false;
-		// response_email
-		if(isset($rq->fields->response_email) && isset($rq->fields->response_email->value)) {
-			$val = $this->filter->sanitize(urldecode($rq->fields->response_email->value), ["trim", "email"]);
-			if($val != '') $this->fields['response_email']['value'] = $val;
-			else {
-				$this->error['messages'][] = [
-					'title' => "Ошибка",
-					'msg' => 'Поле "'. $this->fields['response_email']['name'] .'" обязательно для указания'
-				];
-				return false;
-			}
-			//$this->logger->log('val = ' . $val);
-		}
-		else return false;
-		
-		return true;
+		//$this->logger->log(__METHOD__ . ". values2 = " . json_encode($this->fields['status']['values']));
 	}
 }

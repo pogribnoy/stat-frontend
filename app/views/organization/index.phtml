@@ -24,8 +24,8 @@
 </div>
 <div class="row-fluid"><div class="col-lg-12"><p></p></div></div>
 <div class="row-fluid"><div class="col-lg-12">
-	<button id="showExpenses" type="button" class="btn btn-primary" onclick="document.location = '/expenselist?filter_organization_id=<?php echo $org['id']['value']; ?>'">Перейти к расходам</button>
-	<button id="organizationRequest" type="button" class="btn btn-default" onclick="organizationRequest(<?php echo $org["id"]["value"]; ?>);">Задать вопрос</button>
+	<button id="showExpenses" type="button" class="btn btn-primary" onclick="document.location = '/expenselist?filter_organization=<?php echo $org['id']['value']; ?>'">Перейти к расходам</button>
+	<!--<button id="organizationRequest" type="button" class="btn btn-default" onclick="organizationRequest2(<?php //echo $org["id"]["value"]; ?>);">Задать вопрос</button>-->
 </div></div>
 
 <?php $select = '<select id="filter_year" onchange="onYearChange(this);">'; 
@@ -36,14 +36,21 @@
 	$select .= '</select>'; 
 ?>
 
-<div class="row-fliud"><div class="col-lg-12 text-center"><h3><?php echo str_replace("{year}", $select, $controller->t->_("text_organization_chart_title")); ?></h3></div></div>
+<div class="row-fliud">
+	<div class="col-lg-12 text-center">
+		<h3><?php echo str_replace("{year}", $select, $controller->t->_("text_organization_chart_title")); ?></h3>
+		<div class="row-fliud<?php if(isset($expenses["totalSum"]) && 0 < $expenses["totalSum"]) { ?> hidden<?php } ?>" id="chartNoDataHeader" >
+			<div class="col-lg-12 text-center">За указанный период нет данных</div>
+		</div>
+	</div>
+</div>
 
 <div class="row-fliud"><div class="col-lg-12">
 	<!-- Chart -->
 	<div id="myPieChart" style="width: 100%; height: 728px;"/>
 </div></div>
 
-<?php //var_dump($expenses["expenseTypes"]); ?>
+<?php var_dump($expenses); ?>
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
@@ -69,7 +76,8 @@ function onYearChange(ctrl) {
 				// используется замкание и bind, в свойстве this хранится container скроллера, как контекст
 				console.log(json);
 				descriptor.rows = [];
-				if(json.totalSum>0){
+				if(json.totalSum && json.totalSum>0){
+					$('#chartNoDataHeader').hide();
 					for (var key in json.expenseTypes) {
 						type = json.expenseTypes[key];
 						descriptor.rows.push([type.name, Number(type.sum), Number(type.prcnt), parseInt(key)]);
@@ -78,8 +86,10 @@ function onYearChange(ctrl) {
 					//google.charts.load('current', {packages: ['corechart']});
 					drawChart();
 				}
-				else alert("Нет данных");
-				
+				else {
+					$('#chartNoDataHeader').show();
+					chart.clearChart();
+				}
 			}
 		}),
 		error: function(xhr, ajaxOptions, thrownError) {

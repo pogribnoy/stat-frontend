@@ -11,6 +11,7 @@ $config = new Config(array(
 		"charset" => "UTF8",
     ),
 	"application" => array(
+		"version" => "0.3",
 		"module" => "frontend",
 		"host" => "rgor.ddns.net",
 		"commonHost" => "http://rgor-b.ddns.net",
@@ -32,5 +33,19 @@ $config = new Config(array(
 		"layoutsDir" => "app/views/layouts/",
 		"partialsDir" => "app/views/partials/",
 		"templatesDir" => "app/views/templates/",
+		"adminRoleID" => "1",
+		"guestRoleID" => "2",
+		"orgadminRoleID" => '6',
+		"requestStatus" => [
+			"newStatusID" => '1',
+			"processedStatusID" => '2',
+			"doneStatusID" => '5',
+		],
+		// коды для тестирования
+		//"reCaptchaPublicKey" => "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI",
+		//"reCaptchaSecretKey" => "6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe",
+		// реальные коды
+		"reCaptchaPublicKey" => "6LdBTg8UAAAAABPJQ5TBv1X-aX6p0KhkORpd7JAl",
+		"reCaptchaSecretKey" => "6LdBTg8UAAAAABEspdEcFpSwj0YBIFJp4iJe_LF3",
 	)
 ));
