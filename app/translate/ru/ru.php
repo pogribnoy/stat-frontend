@@ -150,6 +150,7 @@ $messages = array(
 "button_login"				=> "Войти",
 "button_new_address"		=> "Новый адрес",
 "button_password_change"	=> "Сменить пароль",
+"button_password_print"		=> "Напечатать пароль",
 "button_password_recover"	=> "Напомнить пароль",
 "button_remove"				=> "Удалить",
 "button_save"				=> "Сохранить",

@@ -34,7 +34,7 @@ class IndexController extends ControllerBase {
 			$this->view->setVar("organizations", $organizations);
 		}
 		$this->view->cache([
-			//"lifetime" => 60,
+			"lifetime" => 5,
 			"key"      => $this->viewCacheKey,
 		]);
 	}

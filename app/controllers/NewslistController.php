@@ -9,7 +9,7 @@ class NewslistController extends ControllerBase {
 		if (!$this->view->getCache()->exists($this->viewCacheKey)) {
 			$date = new DateTime();
 			$date->modify( '-1 year' );
-			$fdate = $date->format( «Y-m-d» ); //2008-07-16
+			$fdate = $date->format("Y-m-d"); //2008-07-16
 
 			$news_rows = News::find([
 				'conditions' => 'active = 1 AND publication_date >= ' . $fdate,

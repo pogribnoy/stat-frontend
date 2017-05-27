@@ -4,7 +4,7 @@
 		<meta charset="utf-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<meta name="description" content="<?php echo $controller->t->_("text_site_short_name"); ?>"/>
-		<meta name="author" content="Porgibnoy"/>
+		<meta name="author" content="Porgiboy"/>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 		<!-- для соцсетей 
 		<meta property="og:image" content="http://<?php //echo $controller->config->application->host;?>/img/logo.png" />
@@ -13,8 +13,8 @@
 		
 		<!--<title>##Наименование сайта</title>-->
 		
-		<link rel="shortcut icon" type="image/png" href="/favicon.png"/>
-		<!--<link rel="shortcut icon" type="image/png" href="<?php //echo $controller->config->application->commonHost; ?>/favicon.png"/>-->
+		<!--<link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+		<link rel="shortcut icon" type="image/png" href="<?php //echo $controller->config->application->commonHost; ?>/favicon.png"/>-->
 		
 		<link rel="stylesheet" type="text/css" media="all" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"/>
 		<link rel="stylesheet" type="text/css" media="all" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"/>	
@@ -34,29 +34,54 @@
 				</div>
 			</div>
 		</div>
+		
+		<div id="container_modals"></div>
+		
     		<!-- jquery: везде -->
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-json/2.6.0/jquery.json.min.js"></script>
 		<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mouse0270-bootstrap-notify/3.1.5/bootstrap-notify.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsrender/0.9.82/jsrender.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-sha1/0.3.0/sha1.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/i18n/ru.js"></script>
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.js"></script>
 		
-		<script src="<?php echo $controller->config->application->commonHost; ?>/common.js"></script>
-		<!-- для работы с модальными окнами -->
-		<script type="text/javascript" src="<?php echo $controller->config->application->commonHost; ?>/modal.js"></script>
-		<script type="text/javascript" src="http://<?php echo $controller->config->application->host; ?>/common-client.js"></script>
-		<script src="<?php echo $controller->config->application->commonHost; ?>/templates/common_templates.js"></script>
-		<!--<script src="<?php echo $controller->config->application->commonHost; ?>/templates/scroller.js"></script>
-		<script src="<?php echo $controller->config->application->commonHost; ?>/templates/entity.js"></script>-->
+		<script type="text/javascript" src="<?php echo $controller->config->application->commonHost; ?>/js/common.js"></script>
+		<script type="text/javascript" src="<?php echo $controller->config->application->commonHost; ?>/js/modal.js"></script>
+		<script type="text/javascript" src="<?php echo $controller->config->application->commonHost; ?>/js/scroller.js"></script>
+		<script type="text/javascript" src="<?php echo $controller->config->application->commonHost; ?>/js/entity.js"></script>
+		<script type="text/javascript" src="http://<?php echo $controller->config->application->host; ?>/js/common-client.js"></script>
+		<script type="text/javascript"> <?php  
+			$common_templates = file_get_contents($controller->config->application->commonHost . '/templates/common_templates.js');
+			if($common_templates !== FALSE) echo $common_templates;
+			else echo 'console.error("Error. No common templates");';
+		?></script>
 		<?php 
-			$this->partial(APP_PATH . $this->config->application->commonTemplatesDir . "form_template");
-			$this->partial(APP_PATH . $this->config->application->commonTemplatesDir . "scroller_template"); 
+			if(isset($descriptor)) {
+				if($descriptor['type'] === 'scroller') {
+					$scroller_template = file_get_contents(APP_PATH . $controller->config->application->commonTemplatesDir . 'scroller_template.html');
+					if($scroller_template !== FALSE) { 
+					?>
+						<script id="scroller_template" type="text/x-jsrender">
+							<?php echo $scroller_template; ?>
+						</script>
+					<?php 
+					}
+				}
+				else if($descriptor['type'] === 'entity') {
+					$entity_template = file_get_contents(APP_PATH . $controller->config->application->commonTemplatesDir . 'entity_template.html');
+					if($entity_template !== FALSE) { 
+					?>
+						<script id="entity_template" type="text/x-jsrender">
+							<?php echo $entity_template; ?>
+						</script>
+					<?php 
+					}
+				}
+			}
 		?>
+		
 		<script src='https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit' async defer></script>
 
 	</body>

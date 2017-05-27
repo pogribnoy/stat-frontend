@@ -20,20 +20,14 @@ class ExpenselistController extends ControllerList {
 				'id' => 'expense_type',
 				'name' => $this->controller->t->_("text_expenselist_expense_type"),
 				'filter' => 'select',
-				//'filter_value' => isset($this->filter_values['expense_type']) ? $this->filter_values['expense_type'] : '',
 				'filter_style' => 'id', //name
-				//'filter_id' => 'expense_type_id', // задается, если отличается от id
-				//'style' => 'id',
 				"sortable" => "DESC",
 			),
 			'organization' => array(
 				'id' => 'organization',
 				'name' => $this->controller->t->_("text_entity_property_name"),
 				'filter' => 'select',
-				//'filter_value' => isset($this->filter_values['street_type']) ? $this->filter_values['street_type'] : '',
 				'filter_style' => 'id', //name
-				//'filter_id' => 'street_type_id', // задается, если отличается от id
-				//'style' => 'id',
 				//"sortable" => "DESC",
 				//'nullSubstitute' => '-',
 				'hidden' => 1,
@@ -42,7 +36,6 @@ class ExpenselistController extends ControllerList {
 				'id' => 'settlement',
 				'name' => $this->controller->t->_("text_expenselist_settlement"),
 				'filter' => 'text',
-				//'filter_value' => isset($this->filter_values['settlement']) ? $this->filter_values['settlement'] : '',
 				"sortable" => "DESC",
 				'nullSubstitute' => '-',
 			),
@@ -51,17 +44,13 @@ class ExpenselistController extends ControllerList {
 				'name' => $this->controller->t->_("text_expenselist_expense_name"),
 				'type' => 'text',
 				'filter' => 'text',
-				//'filter_value' => isset($this->filter_values['name']) ? $this->filter_values['name'] : '',
 				"sortable" => "DESC",
 			),
 			'street_type' => array(
 				'id' => 'street_type',
 				'name' => $this->controller->t->_("text_entity_property_street_type"),
 				'filter' => 'select',
-				//'filter_value' => isset($this->filter_values['street_type']) ? $this->filter_values['street_type'] : '',
 				'filter_style' => 'id', //name
-				//'filter_id' => 'street_type_id', // задается, если отличается от id
-				//'style' => 'id',
 				"sortable" => "DESC",
 				'nullSubstitute' => '-',
 				'hideble' => 1,
@@ -185,7 +174,13 @@ class ExpenselistController extends ControllerList {
 		
 		// строим запрос к БД на выборку данных
 		$phql = "SELECT <TableName>.*, ExpenseType.id AS expense_type_id, ExpenseType.name AS expense_type_name, ExpenseStatus.id AS expense_status_id, ExpenseStatus.name AS expense_status_name, Organization.id AS organization_id, Organization.name AS organization_name, Region.id AS organization_region_id, Region.name AS organization_region_name, StreetType.id AS street_type_id, StreetType.name AS street_type_name FROM <TableName> JOIN ExpenseType on ExpenseType.id=<TableName>.expense_type_id JOIN Organization ON Organization.id = <TableName>.organization_id JOIN Region ON Region.id = Organization.region_id LEFT JOIN StreetType ON StreetType.id = <TableName>.street_type_id LEFT JOIN ExpenseStatus ON ExpenseStatus.id = <TableName>.expense_status_id";
+		
 		$phql .= " WHERE 1=1";
+		
+		// уточняем выборку, если переданы доп. фильтры, которые могут навязывать внешние контроллеры
+		if(isset($this->add_filter["organization_id"])) {
+			$phql .= " AND <TableName>.organization_id = " . $this->add_filter["organization_id"];
+		}
 		
 		return $phql;
 	}
@@ -215,7 +210,10 @@ class ExpenselistController extends ControllerList {
 	protected function addNonColumnsFilters() {
 		if(isset($_REQUEST["filter_organization"])) {
 			$val = $this->filter->sanitize(urldecode($_REQUEST["filter_organization"]), ['trim',"int"]);
-			if($val != '') $this->filter_values["organization"] =  $val;
+			if($val != '') {
+				//$this->filter_values["organization"] =  $val;
+				if(!isset($this->add_filter['organization_id'])) $this->add_filter['organization_id'] = $val;
+			}
 		}
 	}
 	
