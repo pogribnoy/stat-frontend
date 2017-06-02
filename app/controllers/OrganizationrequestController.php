@@ -99,7 +99,7 @@ class OrganizationrequestController extends ControllerEntity {
 				'name' => $this->t->_("text_entity_property_recaptcha"),
 				'type' => 'recaptcha',
 				'required' => 2,
-				'newEntityValue' => $this->config['application']['reCaptchaPublicKey'],
+				'newEntityValue' => $this->config->application->reCaptchaPublicKey,
 			), 
 		];
 		// наполняем поля данными

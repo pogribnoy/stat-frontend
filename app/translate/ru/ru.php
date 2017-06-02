@@ -1,13 +1,14 @@
 <?php
 $messages = array(
 // Locale
-"code"                  => "ru",
-"date_format_short"     => "d.m.Y",
-"date_format_long"      => "l dS F Y",
-"time_format"           => "h:i:s A",
-"decimal_point"         => ".",
-"thousand_point"        => " ",
-"currency_short"        => "р",
+"code"						=> "ru",
+"date_format_short"			=> "d.m.Y",
+"date_format_long"			=> "l dS F Y",
+"time_format"				=> "h:i:s A",
+"decimal_point"				=> ".",
+"thousand_point"			=> " ",
+"currency_short"			=> "р",
+"currency_thousand_short"	=> " тыс. р.",
 
 // Text
 "text_home"             => "Главная",
@@ -45,8 +46,12 @@ $messages = array(
 "text_about_title"			=> "О проекте", // page title
 
 // Page. Organization
-//"text_organization_title"				=> "Организация", // page title
-"text_organization_chart_title"			=> "Распределение расходов по типам за {year} год",
+//"text_organization_title"						=> "Организация", // page title
+"text_organization_chart_title"					=> "Распределение расходов по типам за {year} год",
+"text_organization_chart_expensetype_name"		=> "Тип расхода",
+"text_organization_chart_expensetype_percent"	=> "Доля типа расхода от общей суммы расходов, %",
+"text_organization_chart_id"					=> "Идентификатор",
+"text_organization_chart_no_data" => "За указанный период данных нет",
 
 // Scroller. News list
 "text_newslist_title" => "Новости", // scroller|page title
@@ -55,7 +60,7 @@ $messages = array(
 
 // Entity. Organization request
 "text_organizationrequest_title"			=> "Задайте вопрос", //entity|page title
-"text_organizationrequest_new_entity_title"				=> "Новый вопрос", // new entity form|page title
+"text_organizationrequest_new_entity_title"	=> "Новый вопрос", // new entity form|page title
 "text_organizationrequest_expense"			=> "Расход",
 "text_organizationrequest_topic"			=> "Тема",
 "text_organizationrequest_request"			=> "Вопрос",
@@ -133,8 +138,11 @@ $messages = array(
 "button_add"				=> "Добавить",
 "button_add_address"		=> "Добавить адрес",
 "button_apply"				=> "Применить",
+"button_apply_title"		=> "Применить",
 "button_back"				=> "Назад",
+"button_cancel"				=> "Отмена",
 "button_clear"				=> "Очистить",
+"button_clear_title"		=> "Очистить",
 "button_change_address"		=> "Изменить адрес",
 "button_check"				=> "Проверить",
 "button_confirm"			=> "Подтвердить",
@@ -142,8 +150,10 @@ $messages = array(
 "button_copy"				=> "Копировать",
 "button_coupon"				=> "Применить купон",
 "button_delete"				=> "Удалить",
+"button_delete_title"		=> "Удалить",
 "button_download"			=> "Скачать",
 "button_edit"				=> "Редактировать",
+"button_edit_title"			=> "Редактировать",
 "button_enter"				=> "Войти",
 "button_filter"				=> "Фильтровать",
 "button_filter_clear"		=> "Сброс",
@@ -152,6 +162,8 @@ $messages = array(
 "button_password_change"	=> "Сменить пароль",
 "button_password_print"		=> "Напечатать пароль",
 "button_password_recover"	=> "Напомнить пароль",
+"button_question"			=> "Задать вопрос",
+"button_question_title"		=> "Задать вопрос муниципалитету",
 "button_remove"				=> "Удалить",
 "button_save"				=> "Сохранить",
 "button_save_direct"		=> "Сохранить на сервер",
@@ -159,6 +171,8 @@ $messages = array(
 "button_search"				=> "Поиск",
 "button_select"				=> "Указать",
 "button_send"				=> "Отправить",
+"button_show"				=> "Просмотр",
+"button_show_title"			=> "Просмотр",
 "button_update"				=> "Применить",
 "button_upload"				=> "Загрузить",
 "button_view"				=> "Просмотр",

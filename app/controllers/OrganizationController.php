@@ -75,7 +75,7 @@ class OrganizationController extends ControllerBase {
 				}
 			}
 			$this->view->cache([
-				//"lifetime" => 60,
+				"lifetime" => $this->config->application->caching->viewCacheDedaultTime,
 				"key"      => $viewCacheKey,
 			]);
 		}

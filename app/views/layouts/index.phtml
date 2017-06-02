@@ -1,5 +1,6 @@
+<!-- Меню -->
 <?php $this->partial("partials/menu"); ?>
-<!--<br>layouts\index-->
+
 <?php //var_dump( $descriptor); ?>
 <?php //var_dump( $dbg); ?>
 
@@ -27,7 +28,7 @@
 //--></script>
 
 <!-- Модальные окна -->
-<div class="modal fade" id="logonModal" tabindex="-1" role="dialog" aria-labelledby="logonModalHeader">
+<!--<div class="modal fade" id="logonModal" tabindex="-1" role="dialog" aria-labelledby="logonModalHeader">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -58,17 +59,16 @@
 									<input type="checkbox" value="remember-me"> Запомнить меня
 								</label>
 							</div>
-							<!--<button class="btn btn-lg btn-primary btn-block" type="submit" formmethod="get" formaction="/session/start">Войти</button>-->
 							<button type="button" class="btn btn-primary btn-block" onclick="frontendLogin();">Войти</button>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="modal-footer">
-				<!--<button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>-->
+				<button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
 			</div>
-		</div><!-- /.modal-content -->
-	</div><!-- /.modal-dialog -->
+		</div>
+	</div>
 </div>
 <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalHeader">
 	<div class="modal-dialog" role="document">
@@ -80,7 +80,7 @@
 			<div class="modal-body">
 				<div class="row">
 					<div class="col-lg-offset-1 col-lg-10 center-block">
-						<!-- wizard: http://vadimg.com/twitter-bootstrap-wizard-example/#examples -->
+						
 						<div class="form-signin">
 							<h2 class="form-signin-heading text-center">Регистрация</h2>
 							<div class="input-group">
@@ -103,18 +103,17 @@
 								<input id="password2" type="password" class="form-control" name="password2" value="" required="" placeholder="Повторите пароль">                                        
 							</div>
 							<div class="row"><div class="col-lg-12 text-center">&nbsp;</div></div>
-							<!--<button class="btn btn-lg btn-primary btn-block" type="submit" formmethod="get" formaction="/session/start">Войти</button>-->
 							<button type="button" class="btn btn-primary btn-block" onclick="register();">Зарегистрироваться</button>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="modal-footer">
-				<!--<button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>-->
+				<button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
 			</div>
-		</div><!-- /.modal-content -->
-	</div><!-- /.modal-dialog -->
-</div>
+		</div>
+	</div>
+</div>-->
 
 <!--Запрос в службу поддержки-->
 <div class="modal fade" id="supportRequestModal" tabindex="-1" role="dialog" aria-labelledby="supportRequestModalHeader">

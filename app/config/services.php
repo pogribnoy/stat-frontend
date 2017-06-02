@@ -9,6 +9,10 @@ use Phalcon\Session\Adapter\Files as SessionAdapter;
 use Phalcon\Events\Manager as EventsManager;
 use Phalcon\Logger\Adapter\File as FileAdapter;
 
+//setlocale(LC_ALL, 'Russian_Russia.1251');
+//date_default_timezone_set("Europe/Moscow");
+//date_default_timezone_set("Asia/Baghdad");
+
 /**
  * The FactoryDefault Dependency Injector automatically register the right services providing a full stack framework
  */
@@ -20,8 +24,6 @@ $di->set('config', $config);
 $di->set("request", "Phalcon\Http\Request", true);
 //$di->set("response", "Phalcon\Http\Response", true);
 //$di->set("sessionBag", "Phalcon\Http\Response", true);
-
-//var_dump($di['config']);
 
 //var_dump(APP_PATH);
 
@@ -59,24 +61,14 @@ $di->setShared('view', function() use ($config) {
 	$view = new View();
 	$view->setViewsDir(APP_PATH . $config->application->viewsDir);
 	$view->setLayoutsDir(APP_PATH . $config->application->layoutsDir);
+	
 	return $view;
 });
 
-//setlocale(LC_ALL, 'Russian_Russia.1251');
-//date_default_timezone_set("Europe/Moscow");
-date_default_timezone_set("Asia/Baghdad");
 
 // Соединение с БД создается на основе параметров из конфигурационного файла
 $di->setShared('db', function() use ($config) {
-	$eventsManager = new EventsManager();
-	$logger = new FileAdapter(APP_PATH . "/app/logs/db.log", array('mode' => 'a'));
-	
-	// Слушаем все события БД
-	$eventsManager->attach('db', function($event, $connection) use ($logger) {
-        if ($event->getType() == 'beforeQuery') {
-            $logger->log($connection->getSQLStatement());
-        }
-    });
+
 	
 	$dbclass = 'Phalcon\Db\Adapter\Pdo\\' . $config->database->adapter;
 	$connection = new $dbclass(array(
@@ -87,7 +79,16 @@ $di->setShared('db', function() use ($config) {
 		"charset"	=> $config->database->charset
 	));
 	
-	 // Привзываем eventsManager к адаптеру БД
+	$eventsManager = new EventsManager();
+	$logger = new FileAdapter(APP_PATH . "/app/logs/db.log", array('mode' => 'a'));
+	
+	// Слушаем все события БД
+	$eventsManager->attach('db', function($event, $connection) use ($logger) {
+        if ($event->getType() == 'beforeQuery') {
+            $logger->log($connection->getSQLStatement());
+        }
+    });
+	// Привзываем eventsManager к адаптеру БД
     $connection->setEventsManager($eventsManager);
 	
 	return $connection;
@@ -117,15 +118,15 @@ $di->set('viewCache', function() use ($config) {
 	]);
 });
 
-$di->set('dataCache', function() {
-	// Создание frontend для выходных данных. Кэшируем файлы на 10 секунд
-	$frontCache = new Phalcon\Cache\Frontend\Data([
-		"lifetime" => 10,
+$di->set('dataCache', function() use ($config) {
+	// Создание frontend для выходных данных.
+	$cache = new Phalcon\Cache\Frontend\Data([
+		"lifetime" => $config->application->caching->dataCacheDedaultTime,
 	]);
 
 	// Создаем компонент, который будем кэшировать из "Выходных данных" в "Файл"
 	// Устанавливаем папку для кэшируемых файлов - важно указать символ "/" в конце пути
-	return new Phalcon\Cache\Backend\File($frontCache, [
+	return new Phalcon\Cache\Backend\File($cache, [
 		"cacheDir" => APP_PATH . 'app/cache/',
 	]);
 });

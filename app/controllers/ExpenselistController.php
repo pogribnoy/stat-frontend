@@ -3,10 +3,11 @@ class ExpenselistController extends ControllerList {
 	public $entityName = 'Expense';
 	public $controllerName = "Expenselist";
 	public $notCollapsible = 1;
-	
-	public function initialize() {
-		parent::initialize();
-	}
+		
+	public $defaultSort = [
+		"column" => "settlement",
+		"order" => "asc",
+	];
 	
 	
 	/* 
@@ -21,6 +22,7 @@ class ExpenselistController extends ControllerList {
 				'name' => $this->controller->t->_("text_expenselist_expense_type"),
 				'filter' => 'select',
 				'filter_style' => 'id', //name
+				'filterLinkEntityName' => 'ExpenseType',
 				"sortable" => "DESC",
 			),
 			'organization' => array(
@@ -51,6 +53,7 @@ class ExpenselistController extends ControllerList {
 				'name' => $this->controller->t->_("text_entity_property_street_type"),
 				'filter' => 'select',
 				'filter_style' => 'id', //name
+				'filterLinkEntityName' => 'StreetType',
 				"sortable" => "DESC",
 				'nullSubstitute' => '-',
 				'hideble' => 1,
@@ -59,7 +62,6 @@ class ExpenselistController extends ControllerList {
 				'id' => 'street',
 				'name' => $this->controller->t->_("text_entity_property_street"),
 				'filter' => 'text',
-				'filter_value' => isset($this->filter_values['street']) ? $this->filter_values['street'] : '',
 				"sortable" => "DESC",
 				'nullSubstitute' => '-',
 			),
@@ -75,7 +77,6 @@ class ExpenselistController extends ControllerList {
 				'id' => 'executor',
 				'name' => $this->controller->t->_("text_entity_property_executor"),
 				'filter' => 'text',
-				'filter_value' => isset($this->filter_values['executor']) ? $this->filter_values['executor'] : '',
 				"sortable" => "DESC",
 				'nullSubstitute' => '-',
 			),
@@ -83,25 +84,23 @@ class ExpenselistController extends ControllerList {
 				'id' => 'amount',
 				'name' => $this->controller->t->_("text_entity_property_amount"),
 				'filter' => 'text',
-				'filter_value' => isset($this->filter_values['amount']) ? $this->filter_values['amount'] : '',
 				"sortable" => "DESC",
 			),
 			'target_date' => array(
 				'id' => 'target_date',
 				'name' => $this->controller->t->_("text_expenselist_target_date"),
 				'filter' => 'period',
-				'filter_value' => isset($this->filter_values['target_date']) ? $this->filter_values['target_date'] : '',
-				'hideble' => 1,
+				//'hideble' => 1,
 				'nullSubstitute' => '-',
 			),
 			'expense_status' => array(
 				'id' => 'expense_status',
 				'name' => $this->controller->t->_("text_entity_property_status"),
 				'filter' => 'select',
-				'filter_value' => isset($this->filter_values['expense_status']) ? $this->filter_values['expense_status'] : '',
 				'filter_style' => 'id', //name
-				//'filter_id' => 'expense_status_id', // задается, если отличается от id
-				//'style' => 'id',
+				'filterLinkEntityName' => 'ExpenseStatus',
+				//'filterLinkEntityFieldID' => 'name',
+				//'filterFillConditions' => function() { $conditions = ''; return $conditions; },
 				"sortable" => "DESC",
 			),
 			'operations' => array(
@@ -120,49 +119,6 @@ class ExpenselistController extends ControllerList {
 			if($org) $this->view->setVar('page_header', $org->name); //$this->descriptor['page_header'] = $org->name;
 		}
 		//$this->logger->log(json_encode($this->descriptor));
-	}
-	
-	/* 
-	* Заполняет свойство columns данными списков из связанных таблиц
-	* Переопределяемый метод.
-	*/
-	public function fillColumnsWithLists() {
-		
-		// типы расходов для фильтрации
-		$expense_type_rows = ExpenseType::find();
-		$expense_types = array();
-		foreach ($expense_type_rows as $row) {
-			// наполняем массив
-			$expense_types[] = array(
-				'id' => $row->id,
-				"name" => $row->name
-			);
-		}
-		$this->columns['expense_type']['filter_values'] = $expense_types;
-		
-		// статусы расходов для фильтрации
-		$expense_status_rows = ExpenseStatus::find();
-		$expense_statuses = array();
-		foreach ($expense_status_rows as $row) {
-			// наполняем массив
-			$expense_statuses[] = array(
-				'id' => $row->id,
-				"name" => $row->name
-			);
-		}
-		$this->columns['expense_status']['filter_values'] = $expense_statuses;
-		
-		// типы улиц для фильтрации
-		$street_type_rows = StreetType::find();
-		$street_types = array();
-		foreach ($street_type_rows as $row) {
-			// наполняем массив
-			$street_types[] = array(
-				'id' => $row->id,
-				"name" => $row->name
-			);
-		}
-		$this->columns['street_type']['filter_values'] = $street_types;
 	}
 	
 	/* 
@@ -297,6 +253,7 @@ class ExpenselistController extends ControllerList {
 			$this->operations["item_operations"][] = [
 				'id' => 'question',
 				'name' => $this->t->_('button_question'),
+				'title' => $this->t->exists('button_question_title') ? $this->t->_('button_question_title') : null,
 			];
 		}
 	}

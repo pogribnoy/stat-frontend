@@ -19,18 +19,19 @@ $config = new Config(array(
 		"commonPluginsDir" => "../stat-backend/app/common/plugins/",
 		"commonLibraryDir" => "../stat-backend/app/common/library/",
 		"commonModelsDir" => "../stat-backend/app/common/models/",
-		//"commonTemplatesDir" => "../stat-backend/app/views/templates/",
+		"commonPartialsDir" => "../../../stat-backend/app/views/partials/common/",
 		"commonTemplatesDir" => "../stat-backend/public/templates/",
 		//"commonUpploadURL" => "http://178.215.86.165:81/public/",
 		"filesUploadDirectory" => "upload/files/", //Каталог, в который должны загружаться файлы сущностей. В конце обязательно указание символа "/";
 		"noImage" => "no_image.jpg",
 		"cacheACL" => 1, // кешировать ACL из БД
 		"tablePageSizes" => "[30,50,100]", // Ограничение количества строк для таблиц
-		"tableMaxPageSize" => "200", // Максимальное количество строк для таблиц
-		"sessionTimeout" => "600", //10 мин // Время жизни сессии в секундах
+		"tableMaxPageSize" => "200", // максимальное количество строк для таблиц
+		"sessionTimeout" => "600", // в секундах, время жизни сессии в секундах
 		'caching' => [
-			"cacheACL" => 1, // кешировать ACL из БД
-			'viewCacheDedaultTime' => 10, // в секундах
+			"aclCacheDedaultTime" => 20, // в секундах, используется для ACL
+			'dataCacheDedaultTime' => 60, // в секундах, используется для структурированных данных
+			'viewCacheDedaultTime' => 5, // в секундах, используется для представлений
 		],
 		
 		"controllersDir" => "app/controllers/",
