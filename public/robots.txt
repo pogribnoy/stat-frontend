@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Host: rashodygoroda.org
+sitemap: http://rashodygoroda.org/sitemap.xml

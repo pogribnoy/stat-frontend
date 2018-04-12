@@ -1,9 +1,5 @@
 <?php
 class NewslistController extends ControllerBase {
-	
-	public function initialize() {
-		parent::initialize();
-	}
 
 	public function indexAction() {
 		if (!$this->view->getCache()->exists($this->viewCacheKey)) {
@@ -12,7 +8,7 @@ class NewslistController extends ControllerBase {
 			$fdate = $date->format("Y-m-d"); //2008-07-16
 
 			$news_rows = News::find([
-				'conditions' => 'active = 1 AND publication_date >= ' . $fdate,
+				'conditions' => 'deleted_at IS NULL AND active = 1 AND publication_date >= ' . $fdate,
 				'order' => 'publication_date DESC',
 			]);
 			$news = array();
@@ -29,7 +25,7 @@ class NewslistController extends ControllerBase {
 			$this->view->setVar("news", $news);
 		}
 		$this->view->cache([
-			"lifetime" => 86400,
+			"lifetime" => 3600,
 			"key"      => $this->viewCacheKey,
 		]);
 	}

@@ -1,0 +1,323 @@
+<!-- Меню -->
+<?php $this->partial("partials/menu"); ?>
+
+<?php //var_dump( $descriptor); ?>
+<?php //var_dump( $dbg); ?>
+
+<div class="row-fluid">
+	<div class="col-lg-12">
+		<?php if(isset($page_header)) {
+			if(isset($descriptor) && isset($descriptor["controllerName"]) && $descriptor["controllerName"] == "expenselist" && isset($descriptor["filter_values"]) && isset($descriptor["filter_values"]["organization"])) {  ?>
+				<a href="<?php echo "/organization?id=" . $descriptor["filter_values"]["organization"]; ?>"><h1 class="page-header"><?php echo $page_header; ?></h1></a>
+			<?php }
+			else { ?>
+				<h1 class="page-header text-primary">
+					<strong><?php echo $page_header; ?></strong><br/>
+					<small class=""><?php if(isset($page_subheader)) echo $page_subheader; ?></small>
+				</h1>
+			<?php } ?>
+		<?php } ?>
+	</div>
+</div><!-- /.row-fluid -->
+	
+<div class="row-fluid">
+	<div class="col-lg-12">
+		<div id="entity_form_placeholder"></div>
+		<div id="scroller_form_placeholder"></div>
+		
+		<?php echo $this->getContent(); ?>
+	</div>
+</div><!-- /.row-fluid -->
+
+<script type="text/javascript"><!--
+<?php if(isset($descriptor)) echo "var descriptor =" . json_encode($descriptor) . ";"; ?>
+//--></script>
+
+<!-- Модальные окна -->
+<!--<div class="modal fade" id="logonModal" tabindex="-1" role="dialog" aria-labelledby="logonModalHeader">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="logonModalHeader">Добро пожаловать</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-lg-offset-1 col-lg-10 center-block">
+						<div class="form-signin">
+							<h2 class="form-signin-heading text-center">Авторизация</h2>
+							<div class="input-group">
+								<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+								<input type="email" id="email" class="form-control" placeholder="Email">
+							</div>
+							<div class="row"><div class="col-lg-12 text-center">ИЛИ</div></div>
+							<div class="input-group">
+									<span class="input-group-addon"><i class="glyphicon glyphicon-phone-alt"></i></span>
+									<input id="phone" type="tel" class="form-control" name="phone" value="" placeholder="Телефон" pattern="[0-9]+" maxlength="12">                                        
+							</div>
+							<div class="row"><div class="col-lg-12 text-center">&nbsp;</div></div>
+							<div class="input-group">
+								<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+								<input id="password" type="password" class="form-control" name="password" value="" required="" placeholder="Пароль">                                        
+							</div>
+							<div class="checkbox">
+								<label>
+									<input type="checkbox" value="remember-me"> Запомнить меня
+								</label>
+							</div>
+							<button type="button" class="btn btn-primary btn-block" onclick="frontendLogin();">Войти</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalHeader">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="registerModalHeader">Добро пожаловать</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-lg-offset-1 col-lg-10 center-block">
+						
+						<div class="form-signin">
+							<h2 class="form-signin-heading text-center">Регистрация</h2>
+							<div class="input-group">
+								<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+								<input type="email" id="email" class="form-control" placeholder="Email">
+							</div>
+							<div class="row"><div class="col-lg-12 text-center">И/ИЛИ</div></div>
+							<div class="input-group">
+									<span class="input-group-addon"><i class="glyphicon glyphicon-phone-alt"></i></span>
+									<input id="phone" type="tel" class="form-control" name="phone" value="" placeholder="Телефон" pattern="[0-9]+" maxlength="12">                                        
+							</div>
+							<div class="row"><div class="col-lg-12 text-center">&nbsp;</div></div>
+							<div class="input-group">
+								<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+								<input id="password" type="password" class="form-control" name="password" value="" required="" placeholder="Пароль">                                        
+							</div>
+							<div class="row"><div class="col-lg-12 text-center">&nbsp;</div></div>
+							<div class="input-group">
+								<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+								<input id="password2" type="password" class="form-control" name="password2" value="" required="" placeholder="Повторите пароль">                                        
+							</div>
+							<div class="row"><div class="col-lg-12 text-center">&nbsp;</div></div>
+							<button type="button" class="btn btn-primary btn-block" onclick="register();">Зарегистрироваться</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+			</div>
+		</div>
+	</div>
+</div>-->
+
+<!--Запрос в службу поддержки-->
+<div class="modal fade" id="supportRequestModal" tabindex="-1" role="dialog" aria-labelledby="supportRequestModalHeader">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="supportRequestModalHeader">Обращение в службу поддержки</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-lg-offset-1 col-lg-10 center-block">
+						<!-- wizard: http://vadimg.com/twitter-bootstrap-wizard-example/#examples -->
+						<form class="form">
+							<h2 class="form-heading text-center">Вопрос</h2>
+							
+							<div class="row">
+								<div class="col-lg-3">
+									<span >Тема</span>
+								</div>
+								<div class="col-lg-9">
+									<input type="text" id="supportRequestTopic" class="form-control" placeholder="">
+								</div>
+							</div>
+							<div class="row"><div class="col-lg-12 text-center">&nbsp;</div></div>
+							<div class="row">
+								<div class="col-lg-3">
+									<span >Текст обращения</span>
+								</div>
+								<div class="col-lg-9 text-center">
+									<textarea id="supportRequestText" class="form-control" placeholder="" ></textarea>
+								</div>
+							</div>
+							<div class="row"><div class="col-lg-12 text-center">&nbsp;</div></div>
+							<div class="row">
+								<div class="col-lg-3">
+									<span >Направить ответ</span>
+								</div>
+								<div class="col-lg-9">
+									<input type="text" id="supportRequestEmail" class="form-control" placeholder="Email">
+								</div>                                        
+							</div>
+							<div class="row"><div class="col-lg-12 text-center">&nbsp;</div></div>
+							<!--<button class="btn btn-lg btn-primary btn-block" type="submit" formmethod="get" formaction="/session/start">Войти</button>-->
+							<button type="button" class="btn btn-primary btn-block" onclick="">Отправить</button>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<!--<button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>-->
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div>
+
+<!--<script type="text/javascript">
+
+function frontendLogin() {
+	var url = '/session/start?';
+	//var modal = $("#logonModal");
+	var modal = $(".form-signin");
+	
+	var phone = modal.find('#phone').val();
+	if (phone) url += 'phone=' + encodeURIComponent(phone);
+	var email = modal.find('#email').val();
+	if (email) url += (phone ? '&' : '') +'&email=' + encodeURIComponent(email);
+	var password = modal.find('#password').val();
+	password = sha1(password);
+	if (password) url += '&password=' + encodeURIComponent(password);
+	
+	console.log(url);
+	
+	$.ajax({
+		url: url,
+		dataType: 'json',
+		method: 'get',
+		beforeSend: function() {
+				// показываем прогрессбар
+		},
+		complete: function() {
+			// скрываем прогрессбар
+		},			
+		success: function(json) {
+			console.log(json);
+			handleAjaxSuccess(json.success)
+			if(!handleAjaxError(json.error)) {
+				//if(json.success.redirect) document.location = json.success.redirect;
+				location.reload();
+				/*else {
+					var authButtonsDiv = $('#authButtons');
+					authButtonsDiv.find('[name="login"]').hide();
+					authButtonsDiv.find('[name="register"]').hide();
+					authButtonsDiv.find('[name="logout"]').show();
+					modal.hide();
+				}*/
+			}
+			
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			handleAjaxError({
+				messages: [{
+					title: 'Ошибка обмена данными',
+					msg: 'Ошибка обработки запроса на стороне сервера. Обратитесь в службу поддержки',
+				}],
+			});
+		}
+	});
+}
+
+function frontendLogout() {
+	var url = '/session/end';
+	console.log(url);
+	$.ajax({
+		url: url,
+		dataType: 'json',
+		method: 'get',
+		beforeSend: function() {
+				// показываем прогрессбар
+		},
+		complete: function() {
+			// скрываем прогрессбар
+		},			
+		success: function(json) {
+			console.log(json);
+			handleAjaxSuccess(json.success)
+			if(!handleAjaxError(json.error)) {
+				//if(json.success.redirect) document.location = document.location;
+				location.reload();
+				/*else {
+					var authButtonsDiv = $('#authButtons');
+					authButtonsDiv.find('[name="logout"]').hide();
+					authButtonsDiv.find('[name="login"]').show();
+					authButtonsDiv.find('[name="register"]').show();
+				}*/
+			}
+			
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			handleAjaxError({
+				messages: [{
+					title: 'Ошибка обмена данными',
+					msg: 'Ошибка обработки запроса на стороне сервера. Обратитесь в службу поддержки',
+				}],
+			});
+		}
+	});
+}
+
+/*function frontendSupportRequest(id){
+	// родительский контейнер (скроллер), элемент которого открываем
+	var container = containers[container_id];
+	var scroller = container.data;
+	url = '/'+scroller.entity + '/getdata';
+	
+		// запрашиваем с сервера пустую сущность
+	$.ajax({
+		url: url,
+		dataType: 'json',
+		method: 'get',
+		beforeSend: function() {
+				// показываем прогрессбар
+		},
+		complete: function() {
+			// скрываем прогрессбар
+		},			
+		success: function(json) {
+			if(!handleAjaxError(json.error)) {
+				//console.log("С сервера получены полные данные сущности скроллера:");
+				console.log(json);
+				
+				// сохраняем полученные данные
+				var local_entity = saveFullServerEntity(json);
+				//if(!id) local_entity.local_data.status = 'added';
+				//local_entity.local_data.target_container_id = container.local_data.container_id;
+				//if(scroller.relationType) local_entity.local_data.relationType = scroller.relationType;
+				
+				// присваиваем идентификаторы скролерам, чтобы при выводе основных данных сущности оставить метки для их размещения
+				//initEntityScrollers(local_entity);
+				
+				// рисуем модалку
+				var modal_container_id = renderModal(local_entity, container);
+				
+				// показываем модалку
+				showModal(modal_container_id);
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			handleAjaxError({
+				messages: [{
+					title: 'Ошибка обмена данными',
+					msg: 'Ошибка обработки запроса на стороне сервера. Обратитесь в службу поддержки',
+				}],
+			});
+		}
+	});
+}*/
+//</script>-->

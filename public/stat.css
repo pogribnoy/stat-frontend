@@ -1,25 +1,39 @@
-.stat-id-input-field {
-	width:50px;
-}
-
-.stat-row-checkbox-td {
+th.custom-checkbox-class {
 	width:25px;
 }
 
-.stat-id-td {
+th.custom-id-class {
+	width:70px;
+}
+
+th.custom-settlement-class {
+	width:130px;
+	min-width:100px;
+}
+
+th.custom-expense_type-class {
+	width:150px;
+	min-width:100px;
+}
+
+th.custom-target_date-class {
+	width:90px;
+}
+
+th.custom-street_type-class {
+	width:60px;
+}
+
+th.custom-amount-class, th.custom-active-class, th.custom-house-class {
 	width:50px;
 }
 
-.stat-active-td {
-	width:50px;
-}
-
-.stat-operations-td {
-	width:120px;
-}
-
-.stat-scroller-header {
+.panel-heading {
 	font-size: 18px;
+}
+
+span.table-pager {
+	margin-top: 10px;
 }
 
 .stat-pager {
@@ -36,4 +50,17 @@
 .alert, [data-notify="container"] {
 	padding: 5px;
 	font-size: 90%;
+}
+
+/* Логотип и главном меню */
+div.navbar-header a.navbar-brand {
+	padding: 5px;
+}
+div.navbar-header a.navbar-brand img {
+	height: 40px;
+}
+
+/* Таблица конденсированная */
+table.table-condensed {
+	font-size: 12px;
 }

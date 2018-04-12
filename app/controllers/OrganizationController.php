@@ -62,9 +62,10 @@ class OrganizationController extends ControllerBase {
 					// расходы
 					$expenses = $this->getExpenses($org["id"]["value"]);
 					
-					$this->view->setVar("page_header", $org["name"]["value"]);
-					$this->view->setVar("org", $org);
-					$this->view->setVar("expenses", $expenses);
+					$this->view->page_header = $org["name"]["value"];
+					$this->view->org = $org;
+					$this->view->expenses = $expenses;
+					if($this->t->exists('text_' . $this->controllerNameLC . '_description')) $this->view->pageDescription = $this->t->_('text_' . $this->controllerNameLC . '_description', ['param1' => $org["name"]["value"]]);
 				}
 				else {
 					$this->dispatcher->forward([
@@ -133,7 +134,7 @@ class OrganizationController extends ControllerBase {
 	public function getExpenses($orgID, $filter_year=null) {
 		$curD = new DateTime('now');
 		$curYear = (int)$curD->format("Y");
-		$year = $curYear - 1;
+		$year = $curYear;// - 1;
 		if($filter_year != null) $year =  $filter_year;
 		
 		$curDate = $curD->format("Y-m-d");
@@ -148,13 +149,13 @@ class OrganizationController extends ControllerBase {
 		$years = [];
 		$years2 = $year + 1;
 		$years1 = $years2 - 10;
-		if($years1 < 2016) $years1 = 2016;
+		if($years1 < 2016) $years1 = 2017;
 		if($years2 > $curYear) $years2 = $curYear;
 		for($i = $years1; $i <= $years2; $i++) $years[] = $i;
 		
 		$totalSum = Expense::sum([
 			"column" => "amount", 
-			"conditions" => "organization_id=?1 AND ((target_date_from >= ?3 AND target_date_from < ?4) OR (target_date_to >= ?3 AND target_date_to < ?4))", 
+			"conditions" => "deleted_at IS NULL AND organization_id=?1 AND ((target_date_from >= ?3 AND target_date_from < ?4) OR (target_date_to >= ?3 AND target_date_to < ?4))", 
 			"bind" => [
 				1 => $orgID,
 				3 => $periodStart, 
@@ -168,7 +169,7 @@ class OrganizationController extends ControllerBase {
 				// наполняем массив
 				$sum = Expense::sum([
 					"column" => "amount", 
-					"conditions" => "expense_type_id = ?1 AND organization_id=?2 AND ((target_date_from >= ?3 AND target_date_from < ?4) OR (target_date_to >= ?3 AND target_date_to < ?4))", 
+					"conditions" => "deleted_at IS NULL AND expense_type_id = ?1 AND organization_id=?2 AND ((target_date_from >= ?3 AND target_date_from < ?4) OR (target_date_to >= ?3 AND target_date_to < ?4))", 
 					"bind" => [
 						1 => $row->id, 
 						2 => $orgID, 

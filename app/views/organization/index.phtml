@@ -1,22 +1,24 @@
 <div class="row-fluid">
-	<div class="media">
-		<img class="media-object pull-left" src="<?php if($org['img']['href']!='') echo $org['img']['href']; else echo $controller->config->application->noImage; ?>" alt="" style="width:200px; height:200px;">
-		<div class="media-body">
-			<div class="container-fluid">
-				<!--контакты-->
-				<div class="row">
-					<div class="col-lg-2"><p><?php echo $org['contacts']['name']; ?></p></div>
-					<div class="col-lg-10"><p><?php echo $org['contacts']['value']; ?></p></div>
-				</div>
-				<!--email-->
-				<div class="row">
-					<div class="col-lg-2"><p><?php echo $org['email']['name']; ?></p></div>
-					<div class="col-lg-10"><p><?php echo $org['email']['value']; ?></p></div>
-				</div>
-				<!--регион-->
-				<div class="row">
-					<div class="col-lg-2"><p><?php echo $org['region']['name']; ?></p></div>
-					<div class="col-lg-10"><p><?php echo $org['region']['value']; ?></p></div>
+	<div class="col-lg-12">
+		<div class="media">
+			<img class="media-object pull-left" src="<?php if($org['img']['href']!='') echo $org['img']['href']; else echo $controller->config->application->noImage; ?>" alt="" style="width:200px; height:200px;" />
+			<div class="media-body">
+				<div class="container-fluid">
+					<!--контакты-->
+					<div class="row">
+						<div class="col-lg-2"><p><?php echo $org['contacts']['name']; ?></p></div>
+						<div class="col-lg-10"><p><?php echo $org['contacts']['value']; ?></p></div>
+					</div>
+					<!--email-->
+					<div class="row">
+						<div class="col-lg-2"><p><?php echo $org['email']['name']; ?></p></div>
+						<div class="col-lg-10"><p><a href="mailto:<?php echo $org['email']['value']; ?>"><?php echo $org['email']['value']; ?></a></p></div>
+					</div>
+					<!--регион-->
+					<div class="row">
+						<div class="col-lg-2"><p><?php echo $org['region']['name']; ?></p></div>
+						<div class="col-lg-10"><p><?php echo $org['region']['value']; ?></p></div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -42,13 +44,16 @@
 		<div class="row-fliud<?php if(isset($expenses["totalSum"]) && 0 < $expenses["totalSum"]) { ?> hidden<?php } ?>" id="chartNoDataHeader" >
 			<div class="col-lg-12 text-center"><?php echo $controller->t->_("text_organization_chart_no_data"); ?></div>
 		</div>
+		<span class="help-block"><?php echo $controller->t->_("text_organization_chart_note"); ?></span>
 	</div>
 </div>
 
-<div class="row-fliud"><div class="col-lg-12">
-	<!-- Chart -->
-	<div id="myPieChart" style="width:800px; height:400px;"/>
-</div></div>
+<div class="row-fliud">
+	<div class="col-lg-12">
+		<!-- Chart -->
+		<div id="myPieChart" style="width:800px; height:400px;"></div>
+	</div>
+</div>
 
 <?php //var_dump($expenses); ?>
 

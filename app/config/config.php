@@ -10,6 +10,9 @@ $config = new Config(array(
 		"name" => "stat",
 		"charset" => "UTF8",
     ),
+	"email" => [
+		"infoEmail" => "info@rashodygoroda.org",
+	],
 	"application" => array(
 		"version" => "0.3",
 		"module" => "frontend",
@@ -19,7 +22,7 @@ $config = new Config(array(
 		"commonPluginsDir" => "../stat-backend/app/common/plugins/",
 		"commonLibraryDir" => "../stat-backend/app/common/library/",
 		"commonModelsDir" => "../stat-backend/app/common/models/",
-		"commonPartialsDir" => "../../../stat-backend/app/views/partials/common/",
+		//"commonPartialsDir" => "../../../stat-backend/app/views/partials/common/",
 		"commonTemplatesDir" => "../stat-backend/public/templates/",
 		//"commonUpploadURL" => "http://178.215.86.165:81/public/",
 		"filesUploadDirectory" => "upload/files/", //Каталог, в который должны загружаться файлы сущностей. В конце обязательно указание символа "/";

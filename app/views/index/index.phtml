@@ -7,13 +7,13 @@
 			<label for="regionSelect" class="col-lg-3 control-label"><?php echo $t->_("index_select_region"); ?></label>
 			<div class="col-lg-8">
 				<select id="regionSelect" class="form-control extended" onchange="onRegionChange(this);">
-					<option value="*" selected="selected"></option>
+					<option value="*" selected="selected" label="&nbsp;">&nbsp;</option>
 					<?php if(isset($regions)) { 
 						foreach($regions as $id => $name) { ?>
 							<option value="<?php echo $id; ?>"><?php echo $name; ?></option>
 						<?php } ?>
 					<?php } ?>
-				<select>
+				</select>
 				<!--<input type="region" class="form-control" id="inputRegion" placeholder="Регион">-->
 			</div>
 		</div>
@@ -21,18 +21,18 @@
 			<label for="organizationSelect" class="col-lg-3 control-label"><?php echo $t->_("index_select_organization"); ?></label>
 			<div class="col-lg-8">
 				<select id="organizationSelect" class="form-control extended" onchange="onOrganizationChange(this);">
-					<option value="*" selected="selected"></option>
+					<option value="*" selected="selected" label="&nbsp;">&nbsp;</option>
 					<?php if(isset($organizations)) { 
 						foreach($organizations as $id => $org) { ?>
 							<option value="<?php echo $org['id']; ?>"><?php echo $org['name'] . ' (' . $regions[$org['regionID']] . ')'; ?></option>
 						<?php } ?>
 					<?php } ?>
-				<select>
+				</select>
 			</div>
 		</div>
 		<div class="form-group">
 			<div class="col-lg-offset-3 col-lg-10">
-				<button id="showExpenses" type="button" class="btn btn-default" disabled onclick="onShowExpensesClick();">Перейти</button>
+				<button id="showExpensesBtn" type="button" class="btn btn-primary" disabled onclick="onShowExpensesClick();">Перейти</button>
 			</div>
 		</div>
 	</form>
@@ -54,16 +54,11 @@ function PageShowHandler() {
 	var regionID = regCtrl.value;
 	var orgCtrl = document.getElementById('organizationSelect');
 	var organizationID = orgCtrl.value;
-	// если регион выбран
 	if(regionID != "*") {
-		// актуализируем организации
 		onRegionChange(regCtrl);
 	}
-	// если до актуализации была выбрана организация
 	if(organizationID != "*") {
-		// то возвращаем ее в качестве выбранной
 		orgCtrl.value = organizationID;
-		// делаем доступной кнопку перехода к расходам
 		onOrganizationChange(orgCtrl);
 	}
 }
@@ -71,12 +66,11 @@ function PageShowHandler() {
 function onRegionChange(ctrl) {
 	var regionID = ctrl.value;
 	var organizationID = document.getElementById('organizationSelect').value;
-	//var selectOrgs = $("#organizationSelect").empty();
 	var selectOrgs = document.getElementById("organizationSelect");
 	selectOrgs.innerHTML = "";
 	var optionsHTML;
-	if(organizationID == "*") optionsHTML = '<option value="*" selected="selected"></option>';
-	else optionsHTML = '<option value="*"></option>';
+	if(organizationID == "*") optionsHTML = '<option value="*" selected="selected" label="&nbsp;">&nbsp;</option>';
+	else optionsHTML = '<option value="*" label="&nbsp;">&nbsp;</option>';
 	if(regionID == '*') {
 		for (var id in organizations) {
 			var org = organizations[id];
@@ -93,23 +87,29 @@ function onRegionChange(ctrl) {
 			}
 		}
 	}
-	//selectOrgs.append(optionsHTML);
 	selectOrgs.innerHTML = optionsHTML;
-	//selectOrgs.select2();
-	//selectOrgs.on("select2:select", onOrganizationSelect);
 	onOrganizationChange(document.getElementById('organizationSelect'));
 }
 
 function onOrganizationChange(ctrl) {
-	var orgID = ctrl.value;
-	if(orgID == '*') $('#showExpenses').prop('disabled', true);
-	else $('#showExpenses').prop('disabled', false);
+	var organizationID = ctrl.value;
+	var showExpensesBtn = document.getElementById('showExpensesBtn');
+	if(organizationID == '*') {
+		showExpensesBtn.disabled = true;
+	}
+	else {
+		showExpensesBtn.disabled = false;
+	}
 }
 
 function onShowExpensesClick() {
-	var orgID = $("#organizationSelect").val();
-	if(orgID == '*') { $('#showExpenses').prop('disabled', true); return; }
+	var organizationID = document.getElementById('organizationSelect').value;
+	if(organizationID == '*') {
+		var showExpensesBtn = document.getElementById('showExpensesBtn');
+		showExpensesBtn.disabled = true;
+		return; 
+	}
 	
-	document.location = '/organization?id='+orgID;
+	document.location = '/organization?id='+organizationID;
 }
 //--></script>

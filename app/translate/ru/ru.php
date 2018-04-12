@@ -11,24 +11,31 @@ $messages = array(
 "currency_thousand_short"	=> " тыс. р.",
 
 // Text
-"text_home"             => "Главная",
-"text_yes"              => "Да",
-"text_no"               => "Нет",
-"text_none"             => " --- Не выбрано --- ",
-"text_select"           => " --- Выберите --- ",
-"text_pagination"       => "Показано с {start} по {end} из {total} (страниц: {pages})",
-"text_page_sizes"       => "Показывать по",
-"text_separator"        => " &raquo; ",
-"text_search"    				=> "Поиск",
-"text_active_short"    	=> "(акт.)",
-"text_nonactive_short"  => " (неакт.)",
-"text_site_full_name"	=> "Интернет портал общедоступной информации о расходах муниципальных образований «Расходы города»",
-"text_site_short_name"	=> "Расходы города",
-"text_site_version"		=> "Версия",
+"text_empty"				=> "Пустое значение",
+"text_home"					=> "Главная",
+"text_yes"					=> "Да",
+"text_no"					=> "Нет",
+"text_none"					=> " --- Не выбрано --- ",
+"text_select"				=> " --- Выберите --- ",
+"text_pagination"			=> "Показано с {start} по {end} из {total} (страниц: {pages})",
+"text_page_sizes"			=> "Показывать по",
+"text_separator"			=> " &raquo; ",
+"text_search"				=> "Поиск",
+"text_active_short"			=> "(акт.)",
+"text_nonactive_short"		=> " (неакт.)",
+"text_site_contacts_infomail" => "Контактный адрес",
+"text_site_full_name"		=> "Интернет портал общедоступной информации о расходах муниципальных образований «Расходы города»",
+"text_site_full_name_federal_project"	=> "Федеральный проект",
+"text_site_short_name"		=> "Расходы города",
+"text_site_version"			=> "Версия",
+"text_site_work_time"		=> "Профилактические работы на сайте",
+"text_site_work_time_value"	=> "23:00 - 07:00, время московское",
 
 // Scrollers and pages
 // Page. Index
-"text_index_title"			=> "Проект \"Расходы города\"", // page title
+"text_index_title"			=> "Расходы города", // page title
+"text_index_subtitle"		=> "Федеральный проект", // page subtitle
+"text_index_description"	=> "Главная страница портала о расходах города", // page description
 "index_select_region"		=> "Выберите регион",
 "index_select_organization"	=> "Выберите населенный пункт",
 
@@ -44,10 +51,14 @@ $messages = array(
 
 // Page. About
 "text_about_title"			=> "О проекте", // page title
+"text_about_description"	=> "Информация о проекте", // page description
 
 // Page. Organization
 //"text_organization_title"						=> "Организация", // page title
-"text_organization_chart_title"					=> "Распределение расходов по типам за {year} год",
+//"text_organization_subtitle"					=> "asd", // page subtitle
+"text_organization_description"					=> "Актуальные расходы города. Муниципалитет: %param1%", // page description
+"text_organization_chart_title"					=> "Распределение финансовых ресурсов за {year} год",
+"text_organization_chart_note"					=> "Сведения о расходах представлены справочно, без детализации, и корректируются по мере уточнения информации муниципалитетом",
 "text_organization_chart_expensetype_name"		=> "Тип расхода",
 "text_organization_chart_expensetype_percent"	=> "Доля типа расхода от общей суммы расходов, %",
 "text_organization_chart_id"					=> "Идентификатор",
@@ -55,15 +66,16 @@ $messages = array(
 
 // Scroller. News list
 "text_newslist_title" => "Новости", // scroller|page title
+"text_newslist_description" => "Новости о расходах города", // page description
 
 // Entity. News
 
 // Entity. Organization request
-"text_organizationrequest_title"			=> "Задайте вопрос", //entity|page title
-"text_organizationrequest_new_entity_title"	=> "Новый вопрос", // new entity form|page title
+"text_organizationrequest_title"			=> "Оставьте комментарий", //entity|page title
+"text_organizationrequest_new_entity_title"	=> "Новый комментарий", // new entity form|page title
 "text_organizationrequest_expense"			=> "Расход",
 "text_organizationrequest_topic"			=> "Тема",
-"text_organizationrequest_request"			=> "Вопрос",
+"text_organizationrequest_request"			=> "Комментарий",
 "text_organizationrequest_response"			=> "Ответ",
 "text_organizationrequest_response_email"	=> "Email для ответа",
 
@@ -75,6 +87,7 @@ $messages = array(
 
 // Scroller. Expense list
 "text_expenselist_title"				=> "Расходы",
+"text_expenselist_description" 			=> "Актуальные расходы города. Таблица расходов города. Муниципалитет: %param1%", // page description
 "text_expenselist_expense_type"			=> "Тип расходов",
 "text_expenselist_settlement"			=> "Наименование нас. пункта",
 "text_expenselist_expense_name"			=> "Наименование расхода",
@@ -162,8 +175,8 @@ $messages = array(
 "button_password_change"	=> "Сменить пароль",
 "button_password_print"		=> "Напечатать пароль",
 "button_password_recover"	=> "Напомнить пароль",
-"button_question"			=> "Задать вопрос",
-"button_question_title"		=> "Задать вопрос муниципалитету",
+"button_question"			=> "Оставить комментарий",
+"button_question_title"		=> "Оставить комментарий муниципалитету",
 "button_remove"				=> "Удалить",
 "button_save"				=> "Сохранить",
 "button_save_direct"		=> "Сохранить на сервер",
